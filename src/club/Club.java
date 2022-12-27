@@ -1,5 +1,6 @@
 package club;
 
+
 import membre.Membre;
 import membre.President;
 
@@ -17,13 +18,14 @@ public class Club {
 	}
 	
 	public Membre[] trieTableauParId(int nbMembres) {
-        int i = 0;
+		int i = 0;
+		int nbMemb = nbMembres;
         Membre aux = membres[0];
         boolean trie = true;
         while(trie){
             trie = false;
             i = 0;
-            while(i < nbMembres - 1){
+            while(i < nbMemb - 1){
                 if(membres[i].getId() > membres[i + 1].getId()){
                     trie = true;
                     aux = membres[i];
@@ -32,7 +34,7 @@ public class Club {
                 }
                 i++;
             }
-            nbMembres--;
+            nbMemb--;
         }
         return membres;
 	}
@@ -46,10 +48,14 @@ public class Club {
 	}
 	
 	public Membre[] suppMembre(Membre membre, int nbMembres){
-		for(int i = membre.getId(); i != nbMembres-2 ;i++) {
+		int i = 0;
+		while(membre.getId() != membres[i].getId()) {
+			i++;
+		}
+		for(; i < nbMembres - 1; i++) {
 			membres[i] = membres[i++];
 		}
-		nbMembres --;
+		nbMembres--;
 		return membres;
 	}
 	
@@ -60,10 +66,10 @@ public class Club {
 	public void afficherMembres (int nbMembres) {
 		for(int i  = 0; nbMembres > i; i++) {
 			System.out.println("- Id : "+ membres[i].getId() + ", Nom Prenom : " + membres[i].getNomPrenom() );
-			if(membres[i].getStatue().equals("president") 
-					|| membres[i].getStatue().equals("secretaire")
-					|| membres[i].getStatue().equals("tresorier")) {
-				System.out.println("	- " + membres[i].getStatue() + " du club");
+			if(membres[i].getStatut().equals("president") 
+					|| membres[i].getStatut().equals("secretaire")
+					|| membres[i].getStatut().equals("tresorier")) {
+				System.out.println("	- " + membres[i].getStatut() + " du club");
 			}
 			System.out.println("\n");
 		}
@@ -72,7 +78,7 @@ public class Club {
 	
 	public static void main(String[] args) {
 		Club club = new Club();
-		President membre1 = new President(0, "George Gomez", "", "", "", "president", 2018, 2022);
+		President membre1 = new President(0, "George Gomez", "", "", "", 2018, 2022);
 		Membre membre2 = new Membre(1, "Michel Polaref", "", "", "", "secretaire", 2019, 2022);
 		Membre membre3 = new Membre(2, "Jonathan Paleton", "", "", "", "tresorier", 2020, 2022);
 		Membre membre4 = new Membre(3, "Nicolas Aliagas", "", "", "", "membre", 2020, 2021);
@@ -83,7 +89,8 @@ public class Club {
 		club.afficherMembres(4);
 		club.trieTableauParId(4);
 		club.afficherMembres(4);
-		club.trieTableauParId(4);
+		club.suppMembre(membre3, 4);
+		club.afficherMembres(3);
 		Membre membre = club.trouverMembre(0);
 		System.out.println(membre.getNomPrenom());
 	}

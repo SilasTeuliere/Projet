@@ -6,16 +6,16 @@ public class Membre {
 	private String email;
 	private String adresse;
 	private String numTel;
-	private String statue;				//membre, secretaire, president, tresorier
+	private String statut;				//membre, secretaire, president, tresorier
 	private int anneeInscr;
 	private int derAnneeParticipation;
-	public Membre(int id, String nomPrenom, String email, String adresse, String numTel, String statue, int anneeInscr, int derAnneeParticipation) {
+	public Membre(int id, String nomPrenom, String email, String adresse, String numTel, String statut, int anneeInscr, int derAnneeParticipation) {
 		this.id = id;
 		this.nomPrenom = nomPrenom;
 		this.email = email;
 		this.adresse = adresse;
 		this.numTel = numTel;
-		this.statue = statue;
+		this.statut = statut;
 		this.anneeInscr = anneeInscr;
 		this.derAnneeParticipation = derAnneeParticipation;
 	}
@@ -28,8 +28,8 @@ public class Membre {
 		return nomPrenom;
 	}
 
-	public String getStatue() {
-		return statue;
+	public String getStatut() {
+		return statut;
 	}
 
 	public String suppressionMembre() {
