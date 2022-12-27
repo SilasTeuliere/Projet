@@ -24,6 +24,10 @@ public class Membre {
 		return id;
 	}
 
+	public String getNomPrenom() {
+		return nomPrenom;
+	}
+
 	public String getStatue() {
 		return statue;
 	}
