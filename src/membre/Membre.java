@@ -1,7 +1,7 @@
 package membre;
 
 public class Membre {
-	private String id;
+	private int id;
 	private String nomPrenom;
 	private String email;
 	private String adresse;
@@ -9,7 +9,7 @@ public class Membre {
 	private String statue;				//membre, secretaire, president, tresorier
 	private int anneeInscr;
 	private int derAnneeParticipation;
-	public Membre(String id, String nomPrenom, String email, String adresse, String numTel, String statue, int anneeInscr, int derAnneeParticipation) {
+	public Membre(int id, String nomPrenom, String email, String adresse, String numTel, String statue, int anneeInscr, int derAnneeParticipation) {
 		this.id = id;
 		this.nomPrenom = nomPrenom;
 		this.email = email;
@@ -20,6 +20,14 @@ public class Membre {
 		this.derAnneeParticipation = derAnneeParticipation;
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public String getStatue() {
+		return statue;
+	}
+
 	public String suppressionMembre() {
 		return "Membre Supprimé.";
 	}

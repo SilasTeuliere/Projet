@@ -17,7 +17,7 @@ public class Club {
 		this.pres = pres;
 	}
 
-	public Membre[] ajouterHabitant(Membre membre, int nbMembres){
+	public Membre[] ajoutMembre(Membre membre, int nbMembres){
 		if(nbMembres < nbMembreMaximum) {
 			membres[nbMembres] = membre;
 			nbMembres ++;
@@ -25,7 +25,17 @@ public class Club {
 		return membres;
 	}
 	
-	public Membre[] suppriméHabitant(Membre membre, int nbMembres){
+	public Membre[] suppMembre(Membre membre, int nbMembres){
 		return membres;
+	}
+	
+	public void afficherMembres() {
+		for(int i  = 0; nbMembres > i; i++) {
+			System.out.println("- Id : "+ membres[i].getId() + ", Nom Prenom : " + membres[i].getNomPrenom() );
+			if(membres[i].getStatue().equals("president") || membres[i].getStatue().equals("secretaire") ) {
+				System.out.println(" : " + membres[i].getStatue() + " du club");
+			}
+			System.out.println("\n");
+		}
 	}
 }
