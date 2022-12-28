@@ -6,10 +6,10 @@ public class Membre {
 	private String email;
 	private String adresse;
 	private String numTel;
-	private String statut;				//membre, secretaire, president, tresorier
+	private Statut statut;				//membre, SECRETAIRE, PRESIDENT, TRESORIER
 	private int anneeInscr;
 	private int derAnneeParticipation;
-	public Membre(int id, String nomPrenom, String email, String adresse, String numTel, String statut, int anneeInscr, int derAnneeParticipation) {
+	public Membre(int id, String nomPrenom, String email, String adresse, String numTel, Statut statut, int anneeInscr, int derAnneeParticipation) {
 		this.id = id;
 		this.nomPrenom = nomPrenom;
 		this.email = email;
@@ -28,7 +28,7 @@ public class Membre {
 		return nomPrenom;
 	}
 
-	public String getStatut() {
+	public Statut getStatut() {
 		return statut;
 	}
 

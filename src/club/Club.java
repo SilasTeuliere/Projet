@@ -3,6 +3,9 @@ package club;
 
 import membre.Membre;
 import membre.President;
+import membre.Secretaire;
+import membre.Statut;
+import membre.Tresorier;
 
 public class Club {
 	private String nom = "La 3eme Mi-Temps Toulousaine";
@@ -53,7 +56,7 @@ public class Club {
 			i++;
 		}
 		for(; i < nbMembres - 1; i++) {
-			membres[i] = membres[i++];
+			membres[i] = membres[i + 1];
 		}
 		nbMembres--;
 		return membres;
@@ -66,10 +69,10 @@ public class Club {
 	public void afficherMembres (int nbMembres) {
 		for(int i  = 0; nbMembres > i; i++) {
 			System.out.println("- Id : "+ membres[i].getId() + ", Nom Prenom : " + membres[i].getNomPrenom() );
-			if(membres[i].getStatut().equals("president") 
-					|| membres[i].getStatut().equals("secretaire")
-					|| membres[i].getStatut().equals("tresorier")) {
-				System.out.println("	- " + membres[i].getStatut() + " du club");
+			if(membres[i].getStatut().equals(Statut.PRESIDENT) 
+					|| membres[i].getStatut().equals(Statut.SECRETAIRE)
+					|| membres[i].getStatut().equals(Statut.TRESORIER)) {
+				System.out.println("	- " + membres[i].getStatut().toString() + " du club");
 			}
 			System.out.println("\n");
 		}
@@ -78,10 +81,10 @@ public class Club {
 	
 	public static void main(String[] args) {
 		Club club = new Club();
-		President membre1 = new President(0, "George Gomez", "", "", "", 2018, 2022);
-		Membre membre2 = new Membre(1, "Michel Polaref", "", "", "", "secretaire", 2019, 2022);
-		Membre membre3 = new Membre(2, "Jonathan Paleton", "", "", "", "tresorier", 2020, 2022);
-		Membre membre4 = new Membre(3, "Nicolas Aliagas", "", "", "", "membre", 2020, 2021);
+		President membre1 = new President(47, "George Gomez", "", "", "", 2018, 2022);
+		Membre membre2 = new Secretaire(54, "Michel Polaref", "", "", "", 2019, 2022);
+		Membre membre3 = new Tresorier(712, "Jonathan Paleton", "", "", "", 2020, 2022);
+		Membre membre4 = new Membre(78, "Nicolas Aliagas", "", "", "", Statut.MEMBRE, 2020, 2021);
 		club.ajoutMembre(membre2, 1);
 		club.ajoutMembre(membre4, 2);
 		club.ajoutMembre(membre3, 3);
@@ -89,7 +92,7 @@ public class Club {
 		club.afficherMembres(4);
 		club.trieTableauParId(4);
 		club.afficherMembres(4);
-		club.suppMembre(membre3, 4);
+		club.suppMembre(membre1, 4);
 		club.afficherMembres(3);
 		Membre membre = club.trouverMembre(0);
 		System.out.println(membre.getNomPrenom());
