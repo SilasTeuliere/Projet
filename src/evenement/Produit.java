@@ -8,9 +8,11 @@ public enum Produit {
 	BIERE("Biere Leffe", 0.80, 2.00), 
 	PASTIS("Ricard", 10.00, 0.07),
 	WHISKY("Jack Daniel's", 15.00, 0.05);
+	
 	private String nom;
 	private double prix;
 	private double parPersonne;
+	
 	private Produit(String nom, double prix, double parPersonne) {
 		this.nom = nom;
 		this.prix = prix;
