@@ -6,7 +6,7 @@ public class Membre {
 	private String email;
 	private String adresse;
 	private String numTel;
-	private Statut statut;				//membre, SECRETAIRE, PRESIDENT, TRESORIER
+	private Statut statut;				//MEMBRE, SECRETAIRE, PRESIDENT, TRESORIER
 	private int anneeInscr;
 	private int derAnneeParticipation;
 	public Membre(int id, String nomPrenom, String email, String adresse, String numTel, Statut statut, int anneeInscr, int derAnneeParticipation) {
