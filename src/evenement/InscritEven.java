@@ -6,7 +6,7 @@ public class InscritEven {
 	private Membre membre;
 	private double budjetPrevisionnel;
 	private double budjetReel;
-	private FournitureInscrit[] fourniture;
+	private FournitureInscrit[] fournitures;
 	
 	public InscritEven(Membre membre, double budjetPrevisionnel) {
 		super();
@@ -22,12 +22,12 @@ public class InscritEven {
 		this.budjetReel = budjetReel;
 	}
 
-	public FournitureInscrit[] getFourniture() {
-		return fourniture;
+	public FournitureInscrit[] getFournitures() {
+		return fournitures;
 	}
 
-	public void setFourniture(FournitureInscrit[] fourniture) {
-		this.fourniture = fourniture;
+	public void setFournitures(FournitureInscrit[] fournitures) {
+		this.fournitures = fournitures;
 	}
 
 	public Membre getMembre() {

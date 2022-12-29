@@ -5,9 +5,11 @@ import java.time.LocalDate;
 public class Evenement {
 	private LocalDate date ;
 	private String description;
-	private InscritEven[] inscrits;
 	private FournitureEven[] fournitures = new FournitureEven[Produit.getNombreProduitDifferent()];
 	private Salle lieu;
+	private int nbInscritMaximum = 200;
+	private InscritEven[] inscrits = new InscritEven[nbInscritMaximum];
+	private double budgetEven;
 	
 	public Evenement(LocalDate date, String description) {
 		super();
@@ -48,18 +50,15 @@ public class Evenement {
 	}
 	
 	public boolean choixSalle(int nbInscrit) {
-		boolean bool;
+		boolean bool = true;
 		if(Salle.PETITE_SALLE.getNbPersonneMin() <= nbInscrit && nbInscrit <= Salle.PETITE_SALLE.getNbPersonneMax()) {
-			lieu = Salle.PETITE_SALLE;
-			bool = true;
+			this.lieu = Salle.PETITE_SALLE;
 		}
 		else if(Salle.MOYENNE_SALLE.getNbPersonneMin() <= nbInscrit && nbInscrit <= Salle.MOYENNE_SALLE.getNbPersonneMax()) {
-			lieu = Salle.MOYENNE_SALLE;
-			bool = true;
+			this.lieu = Salle.MOYENNE_SALLE;
 		}
 		else if(Salle.GRANDE_SALLE.getNbPersonneMin() <= nbInscrit && nbInscrit <= Salle.GRANDE_SALLE.getNbPersonneMax()) {
-			lieu = Salle.GRANDE_SALLE;
-			bool = true;
+			this.lieu = Salle.GRANDE_SALLE;
 		}
 		else {
 			bool = false;
@@ -71,7 +70,7 @@ public class Evenement {
 		if(!choixSalle(nbInscrit)) {
 			return false;
 		}
-		double budjetEven = lieu.getPrix();
+		this.budgetEven = lieu.getPrix();
 		int i = 0;
 		double produitParEven;
 		double prixProduitEven;
@@ -81,10 +80,13 @@ public class Evenement {
 				produitParEven = Math.floor(produitParEven) + 1;
 			}
 			prixProduitEven = produitParEven * produit.getPrix();
-			budjetEven += prixProduitEven;
-			FournitureEven fourniture = new FournitureEven(produit, (int)produitParEven,  );
-		    fournitures[i].;
+			this.budgetEven += prixProduitEven;
+			FournitureEven fourniture = new FournitureEven(produit, (int)produitParEven, prixProduitEven );
+		    fournitures[i] = fourniture;
 		}
+		
+		double budgetParPersonne = this.budgetEven / nbInscrit;
+		
 		return true;
 	}
 }

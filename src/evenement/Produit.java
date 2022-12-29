@@ -1,13 +1,13 @@
 package evenement;
 
 public enum Produit {
+	QUICHE("Quiche rectangulaire", 20.00, 0.10), 
+	PIZZA("Pizza rectangulaire", 15.00, 0.10), 
+	WHISKY("Jack Daniel's", 15.00, 0.05),
+	PASTIS("Ricard", 10.00, 0.07),
 	SAUCISSON("Fouet Catalan", 2.00, 0.25),
 	CHIPS("Chips à l'ancienne", 1.50, 0.50), 
-	PIZZA("Pizza rectangulaire", 15.00, 0.10), 
-	QUICHE("Quiche rectangulaire", 20.00, 0.10), 
-	BIERE("Biere Leffe", 0.80, 2.00), 
-	PASTIS("Ricard", 10.00, 0.07),
-	WHISKY("Jack Daniel's", 15.00, 0.05);
+	BIERE("Biere Leffe", 0.80, 2.00);
 	
 	private String nom;
 	private double prix;

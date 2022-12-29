@@ -5,11 +5,7 @@ import evenement.Evenement;
 import evenement.InscritEven;
 
 public class Secretaire extends Membre {
-	private Club club;
-	private Membre[] membres;
 	private Evenement evenement;
-	private int nbInscritMaximum = 200;
-	private InscritEven inscrits[] = new InscritEven[nbInscritMaximum];
 	private String[] mailsMembre;
 	private String[] mailsInscrit;
 
@@ -17,7 +13,7 @@ public class Secretaire extends Membre {
 		super(id, nomPrenom, email, adresse, numTel, Statut.SECRETAIRE, anneeInscr, derAnneeParticipation);
 	}
 	
-	public String[] ecritMailMembre(int nbMembre){
+	public String[] ecritMailMembre(int nbMembre, Membre[] membres){
 		for(int i = 0; i < nbMembre ; i++) {
 			mailsMembre[i] = "Bonjour " + membres[i].getNomPrenom() + ", \n "
 					+ "nous vous invitons à vous inscrire si vous le souhaitez à l'évènement du " + evenement.getDate() + ". \n"
@@ -32,14 +28,14 @@ public class Secretaire extends Membre {
 	}
 	
 	
-	public String[] ecritMailInscrit(int nbInscrit){
+	public String[] ecritMailInscrit(int nbInscrit, InscritEven inscrits[]){
 		for(int i = 0; i < nbInscrit ; i++) {
-			mailsInscrit[i] = "Bonjour " + membres[i].getNomPrenom() + ", \n"
-					+ "Merci d'amener les fournitures suivantes :  "
-				for(int j = 0; j <) {
+			mailsInscrit[i] = "Bonjour " + inscrits[i].getMembre().getNomPrenom() + ", \n"
+					+ "Merci d'amener les fournitures suivantes :  ";
+				for(int j = 0; j < nbInscrit; j++) {
 					
 				}
-									+ "Cordialement \n"
+			mailsInscrit[i] += "Cordialement \n"
 									+ this.getNomPrenom();
 		}
 		return mailsInscrit;
@@ -68,7 +64,7 @@ public class Secretaire extends Membre {
 	
 	public void afficherInscritCourant (int nbInscrits) {
 		for(int i  = 0; nbInscrits > i; i++) {
-			System.out.println("- Nom Prenom : "+ inscrits[i].getMembre().getNomPrenom() + ",  Fourniture apporté  : " + inscrits[i].getFourniture() );
+			System.out.println("- Nom Prenom : "+ inscrits[i].getMembre().getNomPrenom() + ",  Fourniture apporté  : " + inscrits[i].getFournitures() );
 			System.out.println("\n");
 		}
 		System.out.println("-----------------");
