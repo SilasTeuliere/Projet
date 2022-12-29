@@ -1,6 +1,8 @@
 package evenement;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Evenement {
 	private LocalDate date ;
@@ -67,6 +69,7 @@ public class Evenement {
 	}
 	
 	public boolean etablissementTabFourniture(int nbInscrit) {
+		// détermination de la salle et de son prix
 		if(!choixSalle(nbInscrit)) {
 			return false;
 		}
@@ -74,6 +77,7 @@ public class Evenement {
 		int i = 0;
 		double produitParEven;
 		double prixProduitEven;
+		// établissement de la liste des produits à acheter
 		for (Produit produit : Produit.values()) { 
 			produitParEven = nbInscrit*produit.getParPersonne();
 			if(produitParEven != Math.floor(produitParEven)) {
@@ -81,11 +85,40 @@ public class Evenement {
 			}
 			prixProduitEven = produitParEven * produit.getPrix();
 			this.budgetEven += prixProduitEven;
-			FournitureEven fourniture = new FournitureEven(produit, (int)produitParEven, prixProduitEven );
+			final FournitureEven fourniture = new FournitureEven(produit, (int)produitParEven, prixProduitEven );
 		    fournitures[i] = fourniture;
 		}
 		
+		// détermination du budget à prévoir par chaque inscrits
 		double budgetParPersonne = this.budgetEven / nbInscrit;
+		double budgetIndividuRestant = Math.round(budgetParPersonne * 100.00) / 100.00;
+		// détermination de la liste des produit à ramener par chaque inscrit
+		// Traité dans l'ordre des différents produits triés par ordre décroissants des prix
+		int nbProd;
+		for (InscritEven inscrit: inscrits) {
+			final List<FournitureInscrit> tableauFourniture = new ArrayList<FournitureInscrit>();
+			for (FournitureEven fourniture: fournitures) {
+				nbProd = 1;
+				while (nbProd <= (fourniture.getNbrTotal() - fourniture.getNbrAchete()) &&
+						fourniture.getProduit().getPrix() * nbProd <= budgetIndividuRestant) {
+					// il reste au moins nbprod de ce produit à acheter 
+					// et l'achat de nbprod de ce produit reste dans mon budget restant
+					nbProd++;
+				}
+				nbProd--;
+				if (nbProd > 0) {
+					// J'achète nbprod de ce produit là
+					final FournitureInscrit fournitureInscrit = new FournitureInscrit (null, fourniture.getProduit(), nbProd, nbProd * fourniture.getProduit().getPrix());
+					tableauFourniture.add(fournitureInscrit);
+					budgetIndividuRestant -= nbProd * fourniture.getProduit().getPrix();
+				}
+				
+			}
+			
+			//Si tout le budget n'est pas utilisé le reste sert à payer la salle
+
+			inscrit.setFournitures((FournitureInscrit[]) tableauFourniture.toArray());
+		}
 		
 		return true;
 	}
