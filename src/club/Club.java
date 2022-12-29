@@ -13,11 +13,16 @@ public class Club {
 	private String email = "3emeMiTempsTls@gmail.com";
 	private String numTel = "";
 	private String adresse = "1 All. Gabriel Biénès, 31000 Toulouse";
-	private int nbMembres = 0;
 	private int nbMembreMaximum = 500;
 	private Membre membres[] = new Membre[nbMembreMaximum];
 
 	
+	
+	public Membre[] getMembres() {
+		return membres;
+	}
+
+
 	public String Publicité(String nom, String email, String numTel, String adresse) {
 		return nom + email + numTel + adresse;
 	}

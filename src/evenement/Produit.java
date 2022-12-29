@@ -27,6 +27,9 @@ public enum Produit {
 	public double getParPersonne() {
 		return parPersonne;
 	}
-
+	
+	public static int getNombreProduitDifferent() {
+		return values().length;
+	}
 	
 }

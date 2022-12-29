@@ -3,7 +3,6 @@ package membre;
 import evenement.Evenement;
 
 public class President extends Membre {
-	private int nbEven = 0;
 	private int nbEvenMaximum = 10;
 	private Evenement[] evenements = new Evenement[nbEvenMaximum];
 	public President(int id, String nomPrenom, String email, String adresse, String numTel, int anneeInscr, int derAnneeParticipation) {
