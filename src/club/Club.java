@@ -1,6 +1,7 @@
 package club;
 
 
+
 import membre.Membre;
 import membre.President;
 import membre.Secretaire;
@@ -15,10 +16,14 @@ public class Club {
 	private int nbMembres = 0;
 	private int nbMembreMaximum = 500;
 	private Membre membres[] = new Membre[nbMembreMaximum];
+
 	
 	public String Publicité(String nom, String email, String numTel, String adresse) {
 		return nom + email + numTel + adresse;
 	}
+	
+	
+	//---------------------------------------------------------Membre----------------------
 	
 	public Membre[] trieTableauParId(int nbMembres) {
 		int i = 0;
@@ -78,6 +83,8 @@ public class Club {
 		}
 		System.out.println("-----------------");
 	}
+	
+	
 	
 	public static void main(String[] args) {
 		Club club = new Club();
