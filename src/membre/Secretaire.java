@@ -1,20 +1,24 @@
 package membre;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import evenement.Evenement;
 import evenement.FournitureInscrit;
 import evenement.InscritEven;
 
 public class Secretaire extends Membre {
-	private Evenement evenement;
+
 	private String[] mailsMembre;
 	private String[] mailsInscrit;
 
-	public Secretaire(int id, String nomPrenom, String email, String adresse, String numTel, int anneeInscr, int derAnneeParticipation, Evenement evenement) {
+	public Secretaire(int id, String nomPrenom, String email, String adresse, String numTel, int anneeInscr, int derAnneeParticipation) {
 		super(id, nomPrenom, email, adresse, numTel, Statut.SECRETAIRE, anneeInscr, derAnneeParticipation);
-		this.evenement = evenement;
 	}
 	
-	public String[] ecritMailMembre(int nbMembre, Membre[] membres){
+	public String[] ecritMailMembre(Membre[] membres, Evenement evenement){
+		int nbMembre = membres.length;
 		for(int i = 0; i < nbMembre ; i++) {
 			mailsMembre[i] = "Bonjour " + membres[i].getNomPrenom() + ", \n "
 					+ "nous vous invitons à vous inscrire si vous le souhaitez à l'évènement du " + evenement.getDate() + ". \n"
@@ -23,13 +27,15 @@ public class Secretaire extends Membre {
 									+ "Et nous indiquer le Budjet que vous souhaitez y mettre."
 									+ "Cordialement \n"
 									+ this.getNomPrenom();
-			
+			System.out.println(mailsMembre[i]);
 		}
+		
 		return mailsMembre;
 	}
 	
 	
-	public String[] ecritMailInscrit(int nbInscrit){
+	public String[] ecritMailInscrit(Evenement evenement){
+		int nbInscrit = evenement.getInscrits().length;
 		for(int i = 0; i < nbInscrit ; i++) {
 			mailsInscrit[i] = "Bonjour " + evenement.getInscrits()[i].getMembre().getNomPrenom() + ", \n"
 					+ "Merci d'amener les fournitures suivantes :  \n";
@@ -42,11 +48,12 @@ public class Secretaire extends Membre {
 				}
 			mailsInscrit[i] += "Cordialement \n"
 									+ this.getNomPrenom();
+			System.out.println(mailsMembre[i]);
 		}
 		return mailsInscrit;
 	}
 	
-	public int ajoutInscrit(InscritEven inscrit, int nbInscrits) {
+	public int ajoutInscrit(InscritEven inscrit, int nbInscrits, Evenement evenement) {
 		if(nbInscrits < nbInscrits) {
 			evenement.getInscrits()[nbInscrits-1] = inscrit;
 			nbInscrits ++;
@@ -54,7 +61,19 @@ public class Secretaire extends Membre {
 		return nbInscrits;
 	}
 	
-	public int suppInscrit(InscritEven inscrit, int nbInscrits){
+	
+	// polymorphisme : un même nom de fonction avec des paramètres différents
+	public void ajoutInscrit(Evenement evenement, Membre membre, double budjetPrevisionnel) {
+		List<InscritEven> listeInscrit = new ArrayList<>();
+		if (evenement.getInscrits() != null) {
+			listeInscrit = Arrays.asList(evenement.getInscrits());
+		}
+	    listeInscrit.add(new InscritEven(membre, budjetPrevisionnel));
+	    evenement.setInscrits((InscritEven[]) listeInscrit.toArray());
+	}
+
+	
+	public int suppInscrit(InscritEven inscrit, int nbInscrits, Evenement evenement){
 		int i = 0;
 		while(!inscrit.getMembre().equals(evenement.getInscrits()[i].getMembre())) {
 			i++;
@@ -67,13 +86,13 @@ public class Secretaire extends Membre {
 	}
 	
 	
-	public void afficherInscritCourant (int nbInscrits) {
+	public void afficherInscritCourant (int nbInscrits, Evenement evenement) {
 		for(int i  = 0; nbInscrits > i; i++) {
 			System.out.println("- Nom Prenom : "+ evenement.getInscrits()[i].getMembre().getNomPrenom() + ",  Fourniture apporté  : " + evenement.getInscrits()[i].getFournitures() );
 			System.out.println("\n");
 		}
 		System.out.println("-----------------");
 	}
-	
-	
+
+
 }

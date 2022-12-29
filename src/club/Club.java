@@ -2,6 +2,13 @@ package club;
 
 
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import evenement.Evenement;
+import evenement.InscritEven;
 import membre.Membre;
 import membre.President;
 import membre.Secretaire;
@@ -11,15 +18,33 @@ import membre.Tresorier;
 public class Club {
 	private String nom = "La 3eme Mi-Temps Toulousaine";
 	private String email = "3emeMiTempsTls@gmail.com";
-	private String numTel = "";
+	private String numTel = "06.10.14.01.01";
 	private String adresse = "1 All. Gabriel Biénès, 31000 Toulouse";
-	private int nbMembreMaximum = 500;
-	private Membre membres[] = new Membre[nbMembreMaximum];
+	private Membre membres[] = new Membre[0];
 
 	
 	
 	public Membre[] getMembres() {
 		return membres;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public String getNumTel() {
+		return numTel;
+	}
+
+
+	public String getAdresse() {
+		return adresse;
 	}
 
 
@@ -30,8 +55,10 @@ public class Club {
 	
 	//---------------------------------------------------------Membre----------------------
 	
-	public Membre[] trieTableauParId(int nbMembres) {
+	public Membre[] trieTableauParId() {
 		int i = 0;
+		int nbMembres = membres.length;
+		
 		int nbMemb = nbMembres;
         Membre aux = membres[0];
         boolean trie = true;
@@ -52,16 +79,58 @@ public class Club {
         return membres;
 	}
 
-	public Membre[] ajoutMembre(Membre membre, int nbMembres){
-		if(nbMembres < nbMembreMaximum) {
-			membres[nbMembres-1] = membre;
-			nbMembres ++;
-		}
-		return membres;
+	// polymorphisme : un même nom de fonction avec des paramètres différents
+	/**
+	 * inscription d'un nouveau membre à la date du jour
+	 * @param nomPrenom
+	 * @param email
+	 * @param adresse
+	 * @param numTel
+	 * @param statut
+	 */
+	public Membre ajoutMembre(String nomPrenom, String email, String adresse, String numTel, Statut statut) {
+		List<Membre> listeMembres = Arrays.asList(membres);
+		int nbMembres = membres.length + 1;
+		int annee = LocalDate.now().getYear();
+		Membre membre;
+/*		switch (statut) {
+		case PRESIDENT:
+			membre = (Membre) new President(nbMembres, "George Gomez", "", "", "", annee, annee);
+			break;
+		case SECRETAIRE:
+			membre = (Membre) new Secretaire(nbMembres, "Michel Polaref", "", "", "", annee, annee);
+			break;
+		case TRESORIER:
+			membre = (Membre) new Tresorier(nbMembres, "Jonathan Paleton", "", "", "", annee, annee);
+			break;
+		default:*/
+			membre = new Membre(nbMembres, "Nicolas Aliagas", "", "", "", Statut.MEMBRE, annee, annee);
+		//}
+		listeMembres.add(membre); 
+		membres = ((Membre[]) listeMembres.toArray());
+		return membre;
 	}
+
+	/**
+	 * inscription d'un nouveau membre à la date du jour - sans transmettre le statut => membre simple
+	 * @param nomPrenom
+	 * @param email
+	 * @param adresse
+	 * @param numTel
+	 */
+	public void ajoutMembre(String nomPrenom, String email, String adresse, String numTel) {
+		List<Membre> listeMembres = Arrays.asList(membres);
+		int nbMembres = membres.length + 1;
+		int annee = LocalDate.now().getYear();
+		listeMembres.add(new Membre(nbMembres, "Nicolas Aliagas", "", "", "", Statut.MEMBRE, annee, annee));
+		membres = ((Membre[]) listeMembres.toArray());
+	}
+
 	
-	public Membre[] suppMembre(Membre membre, int nbMembres){
+	public Membre[] suppMembre(Membre membre){
 		int i = 0;
+		int nbMembres = membres.length;
+		
 		while(membre.getId() != membres[i].getId()) {
 			i++;
 		}
@@ -76,7 +145,8 @@ public class Club {
 		return membres[id];
 	}
 	
-	public void afficherMembres (int nbMembres) {
+	public void afficherMembres () {
+		int nbMembres = membres.length;
 		for(int i  = 0; nbMembres > i; i++) {
 			System.out.println("- Id : "+ membres[i].getId() + ", Nom Prenom : " + membres[i].getNomPrenom() );
 			if(membres[i].getStatut().equals(Statut.PRESIDENT) 
@@ -90,23 +160,4 @@ public class Club {
 	}
 	
 	
-	
-	public static void main(String[] args) {
-		Club club = new Club();
-		President membre1 = new President(47, "George Gomez", "", "", "", 2018, 2022);
-		Membre membre2 = new Secretaire(54, "Michel Polaref", "", "", "", 2019, 2022);
-		Membre membre3 = new Tresorier(712, "Jonathan Paleton", "", "", "", 2020, 2022);
-		Membre membre4 = new Membre(78, "Nicolas Aliagas", "", "", "", Statut.MEMBRE, 2020, 2021);
-		club.ajoutMembre(membre2, 1);
-		club.ajoutMembre(membre4, 2);
-		club.ajoutMembre(membre3, 3);
-		club.ajoutMembre(membre1, 4);
-		club.afficherMembres(4);
-		club.trieTableauParId(4);
-		club.afficherMembres(4);
-		club.suppMembre(membre1, 4);
-		club.afficherMembres(3);
-		Membre membre = club.trouverMembre(0);
-		System.out.println(membre.getNomPrenom());
-	}
 }

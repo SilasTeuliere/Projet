@@ -1,11 +1,11 @@
 package evenement;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Evenement {
-	private LocalDate date ;
+	private LocalDateTime date ;
 	private String description;
 	private FournitureEven[] fournitures = new FournitureEven[Produit.getNombreProduitDifferent()];
 	private Salle lieu;
@@ -13,7 +13,7 @@ public class Evenement {
 	private InscritEven[] inscrits = new InscritEven[nbInscritMaximum];
 	private double budgetEven;
 	
-	public Evenement(LocalDate date, String description) {
+	public Evenement(LocalDateTime date, String description) {
 		super();
 		this.date = date;
 		this.description = description;
@@ -43,7 +43,7 @@ public class Evenement {
 		this.lieu = lieu;
 	}
 	
-	public LocalDate getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 	
@@ -53,13 +53,13 @@ public class Evenement {
 	
 	public boolean choixSalle(int nbInscrit) {
 		boolean bool = true;
-		if(Salle.PETITE_SALLE.getNbPersonneMin() <= nbInscrit && nbInscrit <= Salle.PETITE_SALLE.getNbPersonneMax()) {
+		if (Salle.PETITE_SALLE.getNbPersonneMin() <= nbInscrit && nbInscrit <= Salle.PETITE_SALLE.getNbPersonneMax()) {
 			this.lieu = Salle.PETITE_SALLE;
 		}
-		else if(Salle.MOYENNE_SALLE.getNbPersonneMin() <= nbInscrit && nbInscrit <= Salle.MOYENNE_SALLE.getNbPersonneMax()) {
+		else if (Salle.MOYENNE_SALLE.getNbPersonneMin() <= nbInscrit && nbInscrit <= Salle.MOYENNE_SALLE.getNbPersonneMax()) {
 			this.lieu = Salle.MOYENNE_SALLE;
 		}
-		else if(Salle.GRANDE_SALLE.getNbPersonneMin() <= nbInscrit && nbInscrit <= Salle.GRANDE_SALLE.getNbPersonneMax()) {
+		else if (Salle.GRANDE_SALLE.getNbPersonneMin() <= nbInscrit && nbInscrit <= Salle.GRANDE_SALLE.getNbPersonneMax()) {
 			this.lieu = Salle.GRANDE_SALLE;
 		}
 		else {
@@ -115,7 +115,11 @@ public class Evenement {
 				
 			}
 			
-			//Si tout le budget n'est pas utilisé le reste sert à payer la salle
+			//Si tout le budget d'une personne n'est pas utilisé le reste sert à payer la salle
+			if (budgetIndividuRestant > 0) {
+				final FournitureInscrit fournitureInscrit = new FournitureInscrit (lieu, null, 1, budgetIndividuRestant);
+				tableauFourniture.add(fournitureInscrit);
+			}
 
 			inscrit.setFournitures((FournitureInscrit[]) tableauFourniture.toArray());
 		}

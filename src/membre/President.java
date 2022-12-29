@@ -1,5 +1,10 @@
 package membre;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import evenement.Evenement;
 
 public class President extends Membre {
@@ -18,6 +23,14 @@ public class President extends Membre {
 		return evenements;
 	}
 	
+	// polymorphisme : un même nom de fonction avec des paramètres différents
+	public Evenement[] ajoutEven(Evenement[] evenements, LocalDateTime dateEven, String detail) {
+		List<Evenement> listeEvenement = new ArrayList<>();
+	    listeEvenement = Arrays.asList(evenements);
+	    listeEvenement.add(new Evenement(dateEven, detail));
+		return (Evenement[]) listeEvenement.toArray();
+	}
+
 	public Evenement[] suppEven(Evenement evenement, int nbEven){
 		int i = 0;
 		while(!evenement.getDescription().equals(evenements[i].getDescription())) {
