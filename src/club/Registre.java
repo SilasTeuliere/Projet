@@ -1,3 +1,6 @@
+/**
+ * Classe principale pour les tests de chaque Methode et la generation du OCAML...
+ */
 package club;
 
 import java.time.LocalDateTime;
@@ -9,9 +12,10 @@ import membre.Secretaire;
 import membre.Statut;
 import membre.Tresorier;
 
-/*											DISLAIMER
- * Toute les donnï¿½es utiliser pour la creation du Club ou des membres sont des donnï¿½es de test.
- * QUe ce soit numero de Telephone,Email,Adresse ou autre.
+/**											
+ * 										DISLAIMER
+ * Toutes les données utilisées pour la creation du Club ou des membres sont des données de test.
+ * Que ce soit numéro de telephone, email, adresse ou autre...
  * */
 
 public class Registre {
@@ -70,12 +74,12 @@ public class Registre {
 		membreTresorier.listerAchatRestantLocation(evenements[1]);
 		club.getMembres()[0] = club.getMembres()[0].changerStatut(Statut.MEMBRE);
 		if (club.rechercherStatut(Statut.PRESIDENT) == null) {
-			System.out.println("Plus de prÃ©sident dans le club");
+			System.out.println("Plus de président dans le club");
 		}
 		club.getMembres()[14] = club.getMembres()[14].changerStatut(Statut.PRESIDENT);
 		President nouveauPresident = (President) club.rechercherStatut(Statut.PRESIDENT);
 		nouveauPresident.changerStatut(Statut.PRESIDENT);
-		System.out.println("PrÃ©sident = " + nouveauPresident.getNomPrenom());
+		System.out.println("Président = " + nouveauPresident.getNomPrenom());
 		
 	}
 }

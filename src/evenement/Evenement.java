@@ -50,6 +50,11 @@ public class Evenement {
 		return description;
 	}
 	
+	/**
+	 * effectue automatiquement le choix de la salle en fonction du nombre d'inscrit
+	 * @param nbInscrit
+	 * @return true si salle trouvé false si l'evenement trop ou trop peu de participant (à ameliorer)
+	 */
 	public boolean choixSalle(int nbInscrit) {
 		boolean bool = true;
 		if (Salle.PETITE_SALLE.getNbPersonneMin() <= nbInscrit && nbInscrit <= Salle.PETITE_SALLE.getNbPersonneMax()) {
@@ -67,17 +72,87 @@ public class Evenement {
 		return bool;
 	}
 	
+	/**
+	 * etablissement de la liste des fournitures necessaires par rapport au nombres d'inscrit
+	 * prevoit pour chaque membre ce qu'il doit fournir 
+	 * @return
+	 */
 	public boolean etablissementTabFourniture() {
-		// dï¿½termination de la salle et de son prix
 		int nbInscrit = inscrits.length;
+		// détermination de la salle et de son prix
 		if(!choixSalle(nbInscrit)) {
 			return false;
 		}
 		this.budgetEven = lieu.getPrix();
+		constituerListeFournituresEvenement(nbInscrit);
+		
+		// détermination du budget à prévoir par chaque inscrits
+		double budgetParPersonne = this.budgetEven / nbInscrit;
+		constituerListeFournituresParInscrit(budgetParPersonne);
+		
+		return true;
+	}
+
+	/**
+	 * constitue la liste des fournitures pour chaque inscrit
+	 * @param budgetParPersonne
+	 */
+	private void constituerListeFournituresParInscrit(double budgetParPersonne) {
+		double budgetIndividuRestant;
+		// Traité dans l'ordre des différents produits triés par ordre décroissants des prix
+		for (InscritEven inscrit: inscrits) {
+			budgetIndividuRestant = Math.round(budgetParPersonne * 100.00) / 100.00;
+			final List<FournitureInscrit> tableauFourniture = new ArrayList<FournitureInscrit>();
+			budgetIndividuRestant = determinerFournitureAAcheter(budgetIndividuRestant, tableauFourniture);
+			
+			//Si tout le budget d'une personne n'est pas utilisé le reste sert à payer la salle
+			if (budgetIndividuRestant > 0) {
+				final FournitureInscrit fournitureInscrit = 
+						new FournitureInscrit (lieu, null, 1, Math.round(budgetIndividuRestant * 100.00) / 100.00);
+				tableauFourniture.add(fournitureInscrit);
+			}
+			FournitureInscrit[] fournituresTab = new FournitureInscrit[tableauFourniture.size()];
+			inscrit.setFournitures(tableauFourniture.toArray(fournituresTab));
+		}
+	}
+
+	/**
+	 * determine pour un inscrit ce qu'il doit acheter
+	 * @param budgetIndividuRestant
+	 * @param tableauFourniture
+	 * @return
+	 */
+	private double determinerFournitureAAcheter(double budgetIndividuRestant,
+			final List<FournitureInscrit> tableauFourniture) {
+		int nbProd;
+		for (FournitureEven fourniture: fournitures) {
+			nbProd = 1;
+			while (nbProd <= (fourniture.getNbrTotal() - fourniture.getNbrAchete()) &&
+					fourniture.getProduit().getPrix() * nbProd <= budgetIndividuRestant) {
+				// il reste au moins nbprod de ce produit à acheter 
+				// et l'achat de nbprod de ce produit reste dans mon budget restant
+				nbProd++;
+			}
+			nbProd--;
+			if (nbProd > 0) {
+				// J'achète nbprod de ce produit là
+				final FournitureInscrit fournitureInscrit = new FournitureInscrit (null, fourniture.getProduit(), nbProd, nbProd * fourniture.getProduit().getPrix());
+				tableauFourniture.add(fournitureInscrit);
+				budgetIndividuRestant -= nbProd * fourniture.getProduit().getPrix();
+				fourniture.setNbrAchete(fourniture.getNbrAchete() + nbProd);
+			}
+		}
+		return budgetIndividuRestant;
+	}
+
+	/**
+	 * constitue la liste des fournitures pour l'evenement en fonction du nombre d'inscrit
+	 * @param nbInscrit
+	 */
+	private void constituerListeFournituresEvenement(int nbInscrit) {
 		int i = 0;
 		double produitParEven;
 		double prixProduitEven;
-		// ï¿½tablissement de la liste des produits ï¿½ acheter
 		for (Produit produit : Produit.values()) { 
 			produitParEven = nbInscrit*produit.getParPersonne();
 			if(produitParEven != Math.floor(produitParEven)) {
@@ -89,44 +164,5 @@ public class Evenement {
 		    fournitures[i] = fourniture;
 		    i++;
 		}
-		
-		// dï¿½termination du budget ï¿½ prï¿½voir par chaque inscrits
-		double budgetParPersonne = this.budgetEven / nbInscrit;
-		double budgetIndividuRestant;
-		// dï¿½termination de la liste des produit ï¿½ ramener par chaque inscrit
-		// Traitï¿½ dans l'ordre des diffï¿½rents produits triï¿½s par ordre dï¿½croissants des prix
-		int nbProd;
-		for (InscritEven inscrit: inscrits) {
-			budgetIndividuRestant = Math.round(budgetParPersonne * 100.00) / 100.00;
-			final List<FournitureInscrit> tableauFourniture = new ArrayList<FournitureInscrit>();
-			for (FournitureEven fourniture: fournitures) {
-				nbProd = 1;
-				while (nbProd <= (fourniture.getNbrTotal() - fourniture.getNbrAchete()) &&
-						fourniture.getProduit().getPrix() * nbProd <= budgetIndividuRestant) {
-					// il reste au moins nbprod de ce produit ï¿½ acheter 
-					// et l'achat de nbprod de ce produit reste dans mon budget restant
-					nbProd++;
-				}
-				nbProd--;
-				if (nbProd > 0) {
-					// J'achï¿½te nbprod de ce produit lï¿½
-					final FournitureInscrit fournitureInscrit = new FournitureInscrit (null, fourniture.getProduit(), nbProd, nbProd * fourniture.getProduit().getPrix());
-					tableauFourniture.add(fournitureInscrit);
-					budgetIndividuRestant -= nbProd * fourniture.getProduit().getPrix();
-					fourniture.setNbrAchete(fourniture.getNbrAchete() + nbProd);
-				}
-			}
-			
-			//Si tout le budget d'une personne n'est pas utilisï¿½ le reste sert ï¿½ payer la salle
-			if (budgetIndividuRestant > 0) {
-				final FournitureInscrit fournitureInscrit = 
-						new FournitureInscrit (lieu, null, 1, Math.round(budgetIndividuRestant * 100.00) / 100.00);
-				tableauFourniture.add(fournitureInscrit);
-			}
-			FournitureInscrit[] fournituresTab = new FournitureInscrit[tableauFourniture.size()];
-			inscrit.setFournitures(tableauFourniture.toArray(fournituresTab));
-		}
-		
-		return true;
 	}
 }

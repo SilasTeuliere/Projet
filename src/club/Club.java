@@ -1,6 +1,7 @@
+/**
+ * Classe decrivant le club : son adresse et ses membres...
+ */
 package club;
-
-
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,8 +21,6 @@ public class Club {
 	private String adresse = "1 All. Gabriel Bicnus, 31000 Toulouse";
 	private Membre membres[] = null;
 	private int NumeroIDNouveau = 0;
-
-	
 	
 	public Membre[] getMembres() {
 		return membres;
@@ -31,29 +30,26 @@ public class Club {
 		return nomClub;
 	}
 
-
 	public String getEmailClub() {
 		return emailClub;
 	}
-
 
 	public String getNumTelClub() {
 		return numTelClub;
 	}
 
-
 	public String getAdresse() {
 		return adresse;
 	}
-
 
 	public String Publicite() {
 		return nomClub + emailClub + numTelClub + adresse;
 	}
 	
-	
-	//---------------------------------------------------------Membre----------------------
-	
+	/**
+	 * Trie le tableau Id du membre(Quand c'est pas trié de base)
+	 * @return
+	 */
 	public Membre[] trieTableauParId() {
 		int i = 0;
 		int nbMembres = membres.length;
@@ -78,9 +74,9 @@ public class Club {
         return membres;
 	}
 
-	// polymorphisme : un mï¿½me nom de fonction avec des paramï¿½tres diffï¿½rents
+	// polymorphisme : un même nom de fonction avec des paramètres différents
 	/**
-	 * inscription d'un nouveau membre ï¿½ la date du jour
+	 * inscription d'un nouveau membre à la date du jour
 	 * @param nomPrenom
 	 * @param email
 	 * @param adresse
@@ -117,7 +113,7 @@ public class Club {
 	}
 
 	/**
-	 * inscription d'un nouveau membre Ã  la date du jour - sans transmettre le statut => membre simple
+	 * inscription d'un nouveau membre à la date du jour - sans transmettre le statut => membre simple
 	 * @param nomPrenom
 	 * @param email
 	 * @param adresse
@@ -135,19 +131,30 @@ public class Club {
 		membres = listeMembres.toArray(membresNouveaux);
 	}
 
-	
+	/**
+	 * suppression d'un membre
+	 * @param membre
+	 */
 	public void suppMembre(Membre membre){
-		//passage par une liste pour supprimer physiquement le membre concernÃ©
+		//passage par une liste pour supprimer physiquement le membre concerné
 		List<Membre> listeMembres = new ArrayList<>(Arrays.asList(membres));
 		listeMembres.removeIf(membreLu -> membreLu.getId() == membre.getId());
 		Membre[] membresNouveaux = new Membre[listeMembres.size()];
 		membres = listeMembres.toArray(membresNouveaux);
 	}
 	
+	/**
+	 * trouve le membre dont l'id est mis en entrée 
+	 * @param id
+	 * @return
+	 */
 	public Membre trouverMembre(int id) {
 		return membres[id];
 	}
 	
+	/**
+	 * restitue la liste de tout les membres faisant parties du club en indiquant quand ils appartiennent au bureau du Club
+	 */
 	public void afficherMembres () {
 		int nbMembres = membres.length;
 		for(int i  = 0; nbMembres > i; i++) {
@@ -163,7 +170,7 @@ public class Club {
 	}
 	
 	/**
-	 * Recherche de la premiÃ¨re personne ayant un statut donnÃ©
+	 * Recherche de la première personne ayant un statut donné
 	 * @param statut
 	 * @return
 	 */

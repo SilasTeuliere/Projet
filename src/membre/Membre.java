@@ -1,3 +1,6 @@
+/**
+ * Description de chaque Membre du club (adresse, Nom prenom, email...)
+ */
 package membre;
 
 public class Membre {
@@ -52,12 +55,15 @@ public class Membre {
 		return derAnneeParticipation;
 	}
 
+	/**
+	 * Methode inutile faisant de la redefinition
+	 */
 	public String suppressionMembrePossible() {
 		return "Suppression membre possible.";
 	}
 	
 	/**
-	 * Changer le statut d'un membre (équivalent à un setteur mais plus cleanCode)
+	 * Changer le statut d'un membre
 	 * @param statut
 	 */
 	public Membre changerStatut(Statut statut) {
