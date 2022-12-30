@@ -11,10 +11,10 @@ public enum Salle {
 	private String nom;
 	private String adresse;
 	private double prix;
-	private double nbPersonneMin;
-	private double nbPersonneMax;
+	private int nbPersonneMin;
+	private int nbPersonneMax;
 	
-	private Salle(String nom, String adresse, double prix, double nbPersonneMin, double nbPersonneMax) {
+	private Salle(String nom, String adresse, double prix, int nbPersonneMin, int nbPersonneMax) {
 		this.nom = nom;
 		this.adresse = adresse;
 		this.prix = prix;
@@ -30,10 +30,10 @@ public enum Salle {
 	public double getPrix() {
 		return prix;
 	}
-	public double getNbPersonneMin() {
+	public int getNbPersonneMin() {
 		return nbPersonneMin;
 	}
-	public double getNbPersonneMax() {
+	public int getNbPersonneMax() {
 		return nbPersonneMax;
 	}
 	

@@ -182,4 +182,25 @@ public class Club {
 		}
 		return null;
 	}
+	
+	/**
+	 * creer programme Ocaml liste des membres
+	 * @return
+	 */
+	public String extraireInstructionsCamlMembre() {
+		int nbMembres = membres.length;
+		String texte = " let membres = [\n";
+		for(int i = 0; i < nbMembres; i++) {
+			if(i == nbMembres-1) {
+				texte = texte  + membres[i].getId() +", \"" + membres[i].getNomPrenom() +"\", \"" + membres[i].getEmail() 
+						+ "\", \"" + membres[i].getAdresse() +"\", \"" + membres[i].getNumTel() +"\", \"" + membres[i].getStatut()+ "\"\n";
+			}
+			else {
+				texte = texte + membres[i].getId() +", \"" + membres[i].getNomPrenom() +"\", \"" + membres[i].getEmail() 
+						+ "\", \"" + membres[i].getAdresse() +"\", \"" + membres[i].getNumTel() +"\", \"" + membres[i].getStatut()+ "\";\n";
+			}
+		}
+		texte = texte + "]\n";
+		return texte;
+	}
 }

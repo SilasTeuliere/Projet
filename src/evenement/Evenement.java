@@ -165,4 +165,70 @@ public class Evenement {
 		    i++;
 		}
 	}
+	
+	/**
+	 * creer programme Ocaml liste des inscrits
+	 * @return
+	 */
+	public String extraireInstructionsCamlInscrit() {
+		String listFour;
+		int nbInscrits = inscrits.length;
+		String texte = " let inscrit = [\n";
+		for(int i = 0; i < nbInscrits; i++) {
+			listFour = instructionOcamlFournitureInscrit(i);
+			
+			if(i == nbInscrits-1) {
+				texte = texte  + inscrits[i].getMembre().getId() +", \"" + inscrits[i].getMembre().getNomPrenom() +"\", \"" + inscrits[i].getBudjetReel() 
+						+ "\", \"" + inscrits[i].getBudjetReel() +"\", " + listFour + "\n";
+			}
+			else {
+				texte = texte  + inscrits[i].getMembre().getId() +", \"" + inscrits[i].getMembre().getNomPrenom() +"\", \"" + inscrits[i].getBudjetReel() 
+						+ "\", \"" + inscrits[i].getBudjetReel() +"\", " + listFour + ";\n";
+			}
+		}
+		texte = texte + "]\n";
+		return texte;
+	}
+
+	/**
+	 * creer liste des fournitures en OCAML
+	 * @return
+	 */
+	private String instructionOcamlFournitureInscrit(int i) {
+		String listFour = "[";
+		int nbFournitures = inscrits[i].getFournitures().length;
+		for(int j = 0; j < nbFournitures; j++) {
+			listFour = listFour + "\"" + inscrits[i].getFournitures()[j].getSalle() + "\", \"" + inscrits[i].getFournitures()[j].getProduit() + "\", " +
+					inscrits[i].getFournitures()[j].getNbr() +", " + inscrits[i].getFournitures()[j].getPrix();
+			if(j == nbFournitures-1) {
+				listFour = listFour + "]";
+			}
+			else {
+				listFour = listFour + ";";
+			}
+		}
+		return listFour;
+	}
+	
+	
+	
+	/**
+	 * creer liste des fournitures en OCAML
+	 * @return
+	 */
+	public String instructionOcamlFourniture() {
+		String listFour = "[";
+		int nbFournitures = fournitures.length;
+		for(int j = 0; j < nbFournitures; j++) {
+			listFour = listFour + "\"" + fournitures[j].getProduit().getNom() + "\", " + fournitures[j].getNbrTotal() +", " + fournitures[j].getPrixTotal() +", "
+					+ fournitures[j].getNbrAchete();
+			if(j == nbFournitures-1) {
+				listFour = listFour + "\n]\n";
+			}
+			else {
+				listFour = listFour + ";\n";
+			}
+		}
+		return listFour;
+	}
 }

@@ -19,6 +19,7 @@ import membre.Tresorier;
  * */
 
 public class Registre {
+	
 	public static void main(String[] args) {
 		Club club = new Club();
 		Evenement[] evenements = new Evenement[0];
@@ -80,6 +81,10 @@ public class Registre {
 		President nouveauPresident = (President) club.rechercherStatut(Statut.PRESIDENT);
 		nouveauPresident.changerStatut(Statut.PRESIDENT);
 		System.out.println("Président = " + nouveauPresident.getNomPrenom());
+		System.out.println(club.extraireInstructionsCamlMembre());
+		System.out.println(evenements[1].instructionOcamlFourniture());
+		System.out.println(evenements[1].extraireInstructionsCamlInscrit());
 		
 	}
+	
 }
