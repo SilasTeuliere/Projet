@@ -160,7 +160,14 @@ public class Club {
 	 * @return
 	 */
 	public Membre trouverMembre(int id) {
-		return membres[id];
+		int i = 0;
+		while (i < membres.length && membres[i].getId() != id) {
+			i++;
+		}
+		if (i >= membres.length) {
+			return null; 
+		}
+		return membres[i];
 	}
 	
 	/**

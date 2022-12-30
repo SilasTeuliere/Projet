@@ -30,10 +30,10 @@ public class Secretaire extends Membre {
 		int nbMembre = membres.length;
 		for(int i = 0; i < nbMembre ; i++) {
 			final String mailMembre = "Bonjour " + membres[i].getNomPrenom() + ", \n "
-					+ "nous vous invitons ê vous inscrire si vous le souhaitez ê l'êvênement du " + evenement.getDate() + ". \n"
-							+ "Cet êvênement sera " + evenement.getDescription() + ". \n"
+					+ "nous vous invitons à vous inscrire si vous le souhaitez à l'événement du " + evenement.getDate() + ". \n"
+							+ "Cet événement sera " + evenement.getDescription() + ". \n"
 									+ "Si vous souhaitez vous inscrire renvoyez un mail d'ici maximum une semaine pour que nous puissions reserver la salle. \n"
-									+ "Et nous indiquer le Budjet que vous souhaitez y mettre. \n"
+									+ "Et nous indiquer le budget que vous souhaitez y mettre. \n"
 									+ "Cordialement \n"
 									+ this.getNomPrenom();
 			System.out.println(mailMembre);
@@ -52,10 +52,13 @@ public class Secretaire extends Membre {
 		int nbInscrit = evenement.getInscrits().length;
 		for(int i = 0; i < nbInscrit ; i++) {
 			String mailInscrit = "Bonjour " + evenement.getInscrits()[i].getMembre().getNomPrenom() + ", \n"
+					+ "Notre troisième mis-temps pour " + evenement.getDescription() 
+					+ " aura lieu à la salle " + evenement.getLieu().getNom() + " " + evenement.getLieu().getAdresse() +"\n"
 					+ "Merci d'amener les fournitures suivantes :  \n";
 				for(FournitureInscrit fournitureInscrit: evenement.getInscrits()[i].getFournitures()) {
 					if (fournitureInscrit.getSalle() == null) {
-						mailInscrit += " - " + fournitureInscrit.getNbr() + " de " + fournitureInscrit.getProduit().getNom() + " pour un prix de " + fournitureInscrit.getPrix() + " euros \n";
+						mailInscrit += " - " + fournitureInscrit.getNbr() + " de " + fournitureInscrit.getProduit().getNom() + 
+								" pour un prix de " + fournitureInscrit.getPrix() + " euros \n";
 					} else {
 						mailInscrit += " - " + "participation aux frais de location de la salle pour " + fournitureInscrit.getPrix() + " euros \n";
 					}

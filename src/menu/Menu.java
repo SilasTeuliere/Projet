@@ -4,13 +4,15 @@ import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import club.Club;
+import evenement.Evenement;
 import membre.President;
+import membre.Secretaire;
 import membre.Statut;
 
 public class Menu {
 	
-	//public static void main(String[] args) {
-	public static void mainTest(String[] args) {
+	public static void main(String[] args) {
+		//public static void mainTest(String[] args) {
 		Club club = new Club();
 		Scanner sc = new Scanner(System.in);
 		
@@ -34,6 +36,7 @@ public class Menu {
 	 * @param sc
 	 */
 	private static void saisirMembres(Club club, Scanner sc) {
+		// pour compléter il faudrait prévoir aussi la gestion d'un mot de passe - en particulier pour les membres du bureau
 		String nomPrenom = "";
 		String email = "";
 		String adresse = "";
@@ -105,6 +108,7 @@ public class Menu {
 	private static void saisirEvenements(Club club, Scanner sc) {
 		
 		// Qui est le président - qui seul peut créer un événement
+		// pour compléter il faudrait faire saisir son nom prénom et son mot de passe au président
 		President president = (President) club.rechercherStatut(Statut.PRESIDENT);
 		
 		System.out.println("---------------------------------------------------------");
@@ -129,7 +133,34 @@ public class Menu {
 
 	
 	private static void saisirInscriptions(Club club, Scanner sc) {
-		// TODO Auto-generated method stub
+		
+		// Qui est le secrétaire - qui seul peut inscrire à un événement
+		// pour compléter il faudrait faire saisir son nom prénom et son mot de passe au secrétaire
+		Secretaire secretaire = (Secretaire) club.rechercherStatut(Statut.SECRETAIRE);
+		
+		System.out.println("---------------------------------------------------------");
+		
+		//Dans cet exercice je ne prévois la saisie que pour un seul des événements le premier (sinon je demanderait d'entrer la date et heure de l'événement
+		Evenement evenement = club.getEvenements()[0];
+		
+		LocalDateTime dateEvenement;
+		int numeroId;
+		double montantPrevu = 0;
+		
+		do {
+			numeroId = -1;
+			System.out.println("Ajout d'un nouvel inscrit pour l'événement du " 
+		+ evenement.getDate().getDayOfMonth() + "/" + (evenement.getDate().getMonth()+1) + evenement.getDate().getYear() + " :");
+			System.out.println("Numéro membre :");
+			numeroId = sc.nextInt();
+			if (numeroId == -1) {
+				System.out.println("Montant prévu :");
+				montantPrevu = sc.nextDouble();
+				secretaire.ajoutInscrit(evenement, secretaire, montantPrevu)
+			}
+		} while (numeroId != -1);
+	}
+
 		
 	}
 
