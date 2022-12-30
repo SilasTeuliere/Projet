@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.0.0">
-  <zoom_level>7</zoom_level>
+  <zoom_level>4</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>63</x>
-      <y>294</y>
-      <w>525</w>
-      <h>280</h>
+      <x>248</x>
+      <y>168</y>
+      <w>300</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>evenement::Evenement
 --
@@ -39,10 +39,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>623</x>
-      <y>70</y>
-      <w>455</w>
-      <h>266</h>
+      <x>568</x>
+      <y>40</y>
+      <w>260</w>
+      <h>152</h>
     </coordinates>
     <panel_attributes>club::Club
 --
@@ -73,10 +73,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1099</x>
-      <y>168</y>
-      <w>623</w>
-      <h>266</h>
+      <x>840</x>
+      <y>96</y>
+      <w>356</w>
+      <h>152</h>
     </coordinates>
     <panel_attributes>membre::Membre
 --
@@ -107,10 +107,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>399</x>
-      <y>623</y>
-      <w>287</w>
-      <h>168</h>
+      <x>440</x>
+      <y>356</y>
+      <w>164</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>evenement::InscritEven
 --
@@ -133,10 +133,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
-      <y>749</y>
-      <w>308</w>
-      <h>161</h>
+      <x>212</x>
+      <y>428</y>
+      <w>176</w>
+      <h>92</h>
     </coordinates>
     <panel_attributes>evenement::FournitureEven
 --
@@ -158,10 +158,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>819</x>
-      <y>630</y>
-      <w>574</w>
-      <h>161</h>
+      <x>680</x>
+      <y>360</y>
+      <w>328</w>
+      <h>92</h>
     </coordinates>
     <panel_attributes>membre::Secretaire
 --
@@ -183,10 +183,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>385</x>
-      <y>840</y>
-      <w>315</w>
-      <h>147</h>
+      <x>432</x>
+      <y>480</y>
+      <w>180</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>evenement::FournitureInscrit
 --
@@ -207,10 +207,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1043</x>
-      <y>476</y>
-      <w>567</w>
-      <h>126</h>
+      <x>808</x>
+      <y>272</y>
+      <w>324</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>membre::President
 --
@@ -229,10 +229,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1134</x>
-      <y>840</y>
-      <w>567</w>
-      <h>77</h>
+      <x>860</x>
+      <y>480</y>
+      <w>324</w>
+      <h>44</h>
     </coordinates>
     <panel_attributes>membre::Tresorier
 --
@@ -247,10 +247,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>784</x>
+      <x>660</x>
       <y>0</y>
-      <w>126</w>
-      <h>49</h>
+      <w>72</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>club::Registre
 --
@@ -263,10 +263,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>231</x>
-      <y>567</y>
-      <w>154</w>
-      <h>196</h>
+      <x>344</x>
+      <y>324</y>
+      <w>88</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1
@@ -277,10 +277,10 @@ m2=*
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>546</x>
-      <y>784</y>
-      <w>84</w>
-      <h>70</h>
+      <x>524</x>
+      <y>448</y>
+      <w>48</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1
@@ -291,10 +291,10 @@ m2=*
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>511</x>
-      <y>567</y>
-      <w>84</w>
-      <h>70</h>
+      <x>504</x>
+      <y>324</y>
+      <w>48</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1
@@ -305,10 +305,10 @@ m2=*
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1365</x>
-      <y>427</y>
-      <w>21</w>
-      <h>63</h>
+      <x>992</x>
+      <y>244</y>
+      <w>12</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
@@ -316,10 +316,10 @@ m2=*
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>910</x>
-      <y>427</y>
-      <w>224</w>
-      <h>217</h>
+      <x>732</x>
+      <y>244</y>
+      <w>128</w>
+      <h>124</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>300.0;10.0;300.0;50.0;10.0;50.0;10.0;290.0</additional_attributes>
@@ -327,10 +327,10 @@ m2=*
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1624</x>
-      <y>427</y>
-      <w>28</w>
-      <h>427</h>
+      <x>1140</x>
+      <y>244</y>
+      <w>16</w>
+      <h>244</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>20.0;10.0;10.0;590.0</additional_attributes>
@@ -338,10 +338,10 @@ m2=*
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1071</x>
-      <y>112</y>
-      <w>280</w>
-      <h>70</h>
+      <x>824</x>
+      <y>64</y>
+      <w>160</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1
@@ -352,10 +352,10 @@ m2=3..n
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>371</x>
-      <y>224</y>
-      <w>266</w>
-      <h>84</h>
+      <x>424</x>
+      <y>128</y>
+      <w>152</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1
@@ -366,10 +366,10 @@ est proposé par &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>630</x>
-      <y>378</y>
-      <w>483</w>
-      <h>259</h>
+      <x>572</x>
+      <y>216</y>
+      <w>276</w>
+      <h>148</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=*
