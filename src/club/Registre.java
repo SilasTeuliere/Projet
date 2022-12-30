@@ -10,7 +10,7 @@ import membre.Statut;
 import membre.Tresorier;
 
 /*											DISLAIMER
- * Toute les données utiliser pour la creation du Club ou des membres sont des données de test.
+ * Toute les donnï¿½es utiliser pour la creation du Club ou des membres sont des donnï¿½es de test.
  * QUe ce soit numero de Telephone,Email,Adresse ou autre.
  * */
 
@@ -54,6 +54,7 @@ public class Registre {
 		membreSecretaire.ajoutInscrit(evenements[1], club.getMembres()[10], 20);
 		membreSecretaire.ajoutInscrit(evenements[1], club.getMembres()[14], 20);
 		membreSecretaire.ajoutInscrit(evenements[1], club.getMembres()[15], 20);
+		evenements[1].etablissementTabFourniture();
 		membreSecretaire.ecritMailInscrit(evenements[1]);		
 		club.afficherMembres();
 		club.trieTableauParId();
@@ -62,5 +63,19 @@ public class Registre {
 		club.afficherMembres();
 		Membre membre = club.trouverMembre(0);
 		System.out.println(membre.getNomPrenom());
+		System.out.println(club.getMembres()[0].suppressionMembrePossible());
+		System.out.println(club.getMembres()[1].suppressionMembrePossible());
+		System.out.println(club.getMembres()[2].suppressionMembrePossible());
+		System.out.println(club.getMembres()[3].suppressionMembrePossible());
+		membreTresorier.listerAchatRestantLocation(evenements[1]);
+		club.getMembres()[0] = club.getMembres()[0].changerStatut(Statut.MEMBRE);
+		if (club.rechercherStatut(Statut.PRESIDENT) == null) {
+			System.out.println("Plus de prÃ©sident dans le club");
+		}
+		club.getMembres()[14] = club.getMembres()[14].changerStatut(Statut.PRESIDENT);
+		President nouveauPresident = (President) club.rechercherStatut(Statut.PRESIDENT);
+		nouveauPresident.changerStatut(Statut.PRESIDENT);
+		System.out.println("PrÃ©sident = " + nouveauPresident.getNomPrenom());
+		
 	}
 }

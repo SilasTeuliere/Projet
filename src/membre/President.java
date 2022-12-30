@@ -8,30 +8,27 @@ import java.util.List;
 import evenement.Evenement;
 
 public class President extends Membre {
-	private int nbEvenMaximum = 10;
-	private Evenement[] evenements = new Evenement[nbEvenMaximum];
 	public President(int id, String nomPrenom, String email, String adresse, String numTel, int anneeInscr, int derAnneeParticipation) {
 		super(id, nomPrenom, email, adresse, numTel, Statut.PRESIDENT, anneeInscr, derAnneeParticipation);
 		
 	}
 	
-	public Evenement[] ajoutEven(Evenement evenement, int nbEven) {
-		if(nbEven < nbEvenMaximum) {
+	public Evenement[] ajoutEven(Evenement[] evenements, Evenement evenement, int nbEven) {
+		if(nbEven < evenements.length) {
 			evenements[nbEven-1] = evenement;
-			nbEven ++;
 		}
 		return evenements;
 	}
 	
-	// polymorphisme : un mÍme nom de fonction avec des paramËtres diffÈrents
+	// polymorphisme : un meme nom de fonction avec des paramÔøΩtres diffÔøΩrents
 	public Evenement[] ajoutEven(Evenement[] evenements, LocalDateTime dateEven, String detail) {
-		List<Evenement> listeEvenement = new ArrayList<>();
-	    listeEvenement = Arrays.asList(evenements);
+		List<Evenement> listeEvenement = new ArrayList<>(Arrays.asList(evenements));
 	    listeEvenement.add(new Evenement(dateEven, detail));
-		return (Evenement[]) listeEvenement.toArray();
+	    Evenement[] evenementsSortie = new Evenement[listeEvenement.size()];
+		return listeEvenement.toArray(evenementsSortie);
 	}
 
-	public Evenement[] suppEven(Evenement evenement, int nbEven){
+	public Evenement[] suppEven(Evenement[] evenements, Evenement evenement, int nbEven){
 		int i = 0;
 		while(!evenement.getDescription().equals(evenements[i].getDescription())) {
 			i++;
@@ -44,7 +41,7 @@ public class President extends Membre {
 	}
 	
 	
-	public void afficherEvenCourant (int nbEven) {
+	public void afficherEvenCourant (Evenement[] evenements, int nbEven) {
 		for(int i  = 0; nbEven > i; i++) {
 			System.out.println("- Date : "+ evenements[i].getDate() + ",  Description : " + evenements[i].getDescription() );
 			System.out.println("\n");
@@ -52,4 +49,17 @@ public class President extends Membre {
 		System.out.println("-----------------");
 	}
 	
+	public String suppressionMembrePossible() {
+		return "Suppression membre Pr√©sident imposible sans remplacement.";
+	}
+	
+	public Membre changerStatut(Statut statut) {
+		if (statut.equals(Statut.PRESIDENT)) {
+			System.out.println("Aucun changement action inutile");
+			return this;
+		} else {
+		    System.out.println("Attention √† avoir un pr√©sident d'association");
+		    return super.changerStatut(statut);
+		}
+	}
 }

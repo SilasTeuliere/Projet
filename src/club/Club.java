@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import evenement.Evenement;
-import evenement.InscritEven;
 import membre.Membre;
 import membre.President;
 import membre.Secretaire;
@@ -16,11 +14,12 @@ import membre.Statut;
 import membre.Tresorier;
 
 public class Club {
-	private String nom = "La 3eme Mi-Temps Toulousaine";
-	private String email = "3emeMiTempsTls@gmail.com";
-	private String numTel = "06.10.14.01.01";
-	private String adresse = "1 All. Gabriel Biénès, 31000 Toulouse";
-	private Membre membres[] = new Membre[0];
+	private String nomClub = "La 3eme Mi-Temps Toulousaine";
+	private String emailClub = "3emeMiTempsTls@gmail.com";
+	private String numTelClub = "06.10.14.01.01";
+	private String adresse = "1 All. Gabriel Bicnus, 31000 Toulouse";
+	private Membre membres[] = null;
+	private int NumeroIDNouveau = 0;
 
 	
 	
@@ -28,18 +27,18 @@ public class Club {
 		return membres;
 	}
 
-	public String getNom() {
-		return nom;
+	public String getNomClub() {
+		return nomClub;
 	}
 
 
-	public String getEmail() {
-		return email;
+	public String getEmailClub() {
+		return emailClub;
 	}
 
 
-	public String getNumTel() {
-		return numTel;
+	public String getNumTelClub() {
+		return numTelClub;
 	}
 
 
@@ -48,8 +47,8 @@ public class Club {
 	}
 
 
-	public String Publicité(String nom, String email, String numTel, String adresse) {
-		return nom + email + numTel + adresse;
+	public String Publicite() {
+		return nomClub + emailClub + numTelClub + adresse;
 	}
 	
 	
@@ -79,9 +78,9 @@ public class Club {
         return membres;
 	}
 
-	// polymorphisme : un même nom de fonction avec des paramètres différents
+	// polymorphisme : un mï¿½me nom de fonction avec des paramï¿½tres diffï¿½rents
 	/**
-	 * inscription d'un nouveau membre à la date du jour
+	 * inscription d'un nouveau membre ï¿½ la date du jour
 	 * @param nomPrenom
 	 * @param email
 	 * @param adresse
@@ -89,56 +88,60 @@ public class Club {
 	 * @param statut
 	 */
 	public Membre ajoutMembre(String nomPrenom, String email, String adresse, String numTel, Statut statut) {
-		List<Membre> listeMembres = Arrays.asList(membres);
-		int nbMembres = membres.length + 1;
+		NumeroIDNouveau++;
 		int annee = LocalDate.now().getYear();
 		Membre membre;
-/*		switch (statut) {
+		
+		switch (statut) {
 		case PRESIDENT:
-			membre = (Membre) new President(nbMembres, "George Gomez", "", "", "", annee, annee);
+			membre = new President(NumeroIDNouveau, nomPrenom, email, adresse, numTel, annee, annee);
 			break;
 		case SECRETAIRE:
-			membre = (Membre) new Secretaire(nbMembres, "Michel Polaref", "", "", "", annee, annee);
+			membre = new Secretaire(NumeroIDNouveau, nomPrenom, email, adresse, numTel, annee, annee);
 			break;
 		case TRESORIER:
-			membre = (Membre) new Tresorier(nbMembres, "Jonathan Paleton", "", "", "", annee, annee);
+			membre = new Tresorier(NumeroIDNouveau, nomPrenom, email, adresse, numTel, annee, annee);
 			break;
-		default:*/
-			membre = new Membre(nbMembres, "Nicolas Aliagas", "", "", "", Statut.MEMBRE, annee, annee);
-		//}
-		listeMembres.add(membre); 
-		membres = ((Membre[]) listeMembres.toArray());
+		default:
+			membre = new Membre(NumeroIDNouveau, nomPrenom, email, adresse, numTel, statut, annee, annee);
+		}
+		List<Membre> listeMembres = new ArrayList<>();
+		if (membres != null) {
+			listeMembres = new ArrayList<>(Arrays.asList(membres));
+		}
+		listeMembres.add(membre);
+		Membre[] membresNouveaux = new Membre[listeMembres.size()];
+		membres = listeMembres.toArray(membresNouveaux);
+		
 		return membre;
 	}
 
 	/**
-	 * inscription d'un nouveau membre à la date du jour - sans transmettre le statut => membre simple
+	 * inscription d'un nouveau membre Ã  la date du jour - sans transmettre le statut => membre simple
 	 * @param nomPrenom
 	 * @param email
 	 * @param adresse
 	 * @param numTel
 	 */
 	public void ajoutMembre(String nomPrenom, String email, String adresse, String numTel) {
-		List<Membre> listeMembres = Arrays.asList(membres);
-		int nbMembres = membres.length + 1;
+		List<Membre> listeMembres = new ArrayList<>();
+		if (membres != null) {
+			listeMembres = new ArrayList<>(Arrays.asList(membres));
+		}
+		NumeroIDNouveau++;
 		int annee = LocalDate.now().getYear();
-		listeMembres.add(new Membre(nbMembres, "Nicolas Aliagas", "", "", "", Statut.MEMBRE, annee, annee));
-		membres = ((Membre[]) listeMembres.toArray());
+		listeMembres.add(new Membre(NumeroIDNouveau, nomPrenom, email, adresse, numTel, Statut.MEMBRE, annee, annee));
+		Membre[] membresNouveaux = new Membre[listeMembres.size()];
+		membres = listeMembres.toArray(membresNouveaux);
 	}
 
 	
-	public Membre[] suppMembre(Membre membre){
-		int i = 0;
-		int nbMembres = membres.length;
-		
-		while(membre.getId() != membres[i].getId()) {
-			i++;
-		}
-		for(; i < nbMembres - 1; i++) {
-			membres[i] = membres[i + 1];
-		}
-		nbMembres--;
-		return membres;
+	public void suppMembre(Membre membre){
+		//passage par une liste pour supprimer physiquement le membre concernÃ©
+		List<Membre> listeMembres = new ArrayList<>(Arrays.asList(membres));
+		listeMembres.removeIf(membreLu -> membreLu.getId() == membre.getId());
+		Membre[] membresNouveaux = new Membre[listeMembres.size()];
+		membres = listeMembres.toArray(membresNouveaux);
 	}
 	
 	public Membre trouverMembre(int id) {
@@ -159,5 +162,17 @@ public class Club {
 		System.out.println("-----------------");
 	}
 	
-	
+	/**
+	 * Recherche de la premiÃ¨re personne ayant un statut donnÃ©
+	 * @param statut
+	 * @return
+	 */
+	public Membre rechercherStatut(Statut statut) {
+		for (Membre membre: membres) {
+			if (membre.getStatut().equals(statut)) {
+				return membre;
+			}
+		}
+		return null;
+	}
 }

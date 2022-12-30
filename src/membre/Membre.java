@@ -32,7 +32,44 @@ public class Membre {
 		return statut;
 	}
 
-	public String suppressionMembre() {
-		return "Membre Supprim�.";
+	public String getEmail() {
+		return email;
+	}
+
+	public String getAdresse() {
+		return adresse;
+	}
+
+	public String getNumTel() {
+		return numTel;
+	}
+
+	public int getAnneeInscr() {
+		return anneeInscr;
+	}
+
+	public int getDerAnneeParticipation() {
+		return derAnneeParticipation;
+	}
+
+	public String suppressionMembrePossible() {
+		return "Suppression membre possible.";
+	}
+	
+	/**
+	 * Changer le statut d'un membre (équivalent à un setteur mais plus cleanCode)
+	 * @param statut
+	 */
+	public Membre changerStatut(Statut statut) {
+		switch (statut) {
+		case PRESIDENT:
+			return new President(id, nomPrenom, email, adresse, numTel, anneeInscr, derAnneeParticipation);
+		case SECRETAIRE:
+			return new Secretaire(id, nomPrenom, email, adresse, numTel, anneeInscr, derAnneeParticipation);
+		case TRESORIER:
+			return new Tresorier(id, nomPrenom, email, adresse, numTel, anneeInscr, derAnneeParticipation);
+		default:
+			return new Membre(id, nomPrenom, email, adresse, numTel, statut, anneeInscr, derAnneeParticipation);
+		}
 	}
 }

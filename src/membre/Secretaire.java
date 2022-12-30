@@ -10,45 +10,47 @@ import evenement.InscritEven;
 
 public class Secretaire extends Membre {
 
-	private String[] mailsMembre;
-	private String[] mailsInscrit;
+	private List<String> mailsMembre = new ArrayList<>();
+	private List<String> mailsInscrit = new ArrayList<>();;
 
 	public Secretaire(int id, String nomPrenom, String email, String adresse, String numTel, int anneeInscr, int derAnneeParticipation) {
 		super(id, nomPrenom, email, adresse, numTel, Statut.SECRETAIRE, anneeInscr, derAnneeParticipation);
 	}
 	
-	public String[] ecritMailMembre(Membre[] membres, Evenement evenement){
+	public List<String> ecritMailMembre(Membre[] membres, Evenement evenement){
 		int nbMembre = membres.length;
 		for(int i = 0; i < nbMembre ; i++) {
-			mailsMembre[i] = "Bonjour " + membres[i].getNomPrenom() + ", \n "
-					+ "nous vous invitons à vous inscrire si vous le souhaitez à l'évènement du " + evenement.getDate() + ". \n"
-							+ "Cette évènement sera " + evenement.getDescription() + ". \n"
+			final String mailMembre = "Bonjour " + membres[i].getNomPrenom() + ", \n "
+					+ "nous vous invitons ï¿½ vous inscrire si vous le souhaitez ï¿½ l'ï¿½vï¿½nement du " + evenement.getDate() + ". \n"
+							+ "Cet ï¿½vï¿½nement sera " + evenement.getDescription() + ". \n"
 									+ "Si vous souhaitez vous inscrire renvoyez un mail d'ici maximum une semaine pour que nous puissions reserver la salle. \n"
-									+ "Et nous indiquer le Budjet que vous souhaitez y mettre."
+									+ "Et nous indiquer le Budjet que vous souhaitez y mettre. \n"
 									+ "Cordialement \n"
 									+ this.getNomPrenom();
-			System.out.println(mailsMembre[i]);
+			System.out.println(mailMembre);
+			mailsMembre.add(mailMembre);
 		}
 		
 		return mailsMembre;
 	}
 	
 	
-	public String[] ecritMailInscrit(Evenement evenement){
+	public List<String> ecritMailInscrit(Evenement evenement){
 		int nbInscrit = evenement.getInscrits().length;
 		for(int i = 0; i < nbInscrit ; i++) {
-			mailsInscrit[i] = "Bonjour " + evenement.getInscrits()[i].getMembre().getNomPrenom() + ", \n"
+			String mailInscrit = "Bonjour " + evenement.getInscrits()[i].getMembre().getNomPrenom() + ", \n"
 					+ "Merci d'amener les fournitures suivantes :  \n";
 				for(FournitureInscrit fournitureInscrit: evenement.getInscrits()[i].getFournitures()) {
 					if (fournitureInscrit.getSalle() == null) {
-						mailsInscrit[i] = " - " + fournitureInscrit.getNbr() + " de " + fournitureInscrit.getProduit().getNom() + " pour un prix de " + fournitureInscrit.getPrix() + " euros \n";
+						mailInscrit += " - " + fournitureInscrit.getNbr() + " de " + fournitureInscrit.getProduit().getNom() + " pour un prix de " + fournitureInscrit.getPrix() + " euros \n";
 					} else {
-						mailsInscrit[i] = " - " + "participation aux frais de location de la salle pour " + fournitureInscrit.getPrix() + " euros \n";
+						mailInscrit += " - " + "participation aux frais de location de la salle pour " + fournitureInscrit.getPrix() + " euros \n";
 					}
 				}
-			mailsInscrit[i] += "Cordialement \n"
+			mailInscrit += "Cordialement \n"
 									+ this.getNomPrenom();
-			System.out.println(mailsMembre[i]);
+			System.out.println(mailInscrit);
+			mailsInscrit.add(mailInscrit);
 		}
 		return mailsInscrit;
 	}
@@ -62,14 +64,15 @@ public class Secretaire extends Membre {
 	}
 	
 	
-	// polymorphisme : un même nom de fonction avec des paramètres différents
+	// polymorphisme : un meme nom de fonction avec des parametres differents
 	public void ajoutInscrit(Evenement evenement, Membre membre, double budjetPrevisionnel) {
 		List<InscritEven> listeInscrit = new ArrayList<>();
 		if (evenement.getInscrits() != null) {
-			listeInscrit = Arrays.asList(evenement.getInscrits());
+			listeInscrit = new ArrayList<>(Arrays.asList(evenement.getInscrits()));
 		}
 	    listeInscrit.add(new InscritEven(membre, budjetPrevisionnel));
-	    evenement.setInscrits((InscritEven[]) listeInscrit.toArray());
+	    InscritEven[] inscrits = new InscritEven[listeInscrit.size()];
+	    evenement.setInscrits(listeInscrit.toArray(inscrits));
 	}
 
 	
@@ -88,11 +91,14 @@ public class Secretaire extends Membre {
 	
 	public void afficherInscritCourant (int nbInscrits, Evenement evenement) {
 		for(int i  = 0; nbInscrits > i; i++) {
-			System.out.println("- Nom Prenom : "+ evenement.getInscrits()[i].getMembre().getNomPrenom() + ",  Fourniture apporté  : " + evenement.getInscrits()[i].getFournitures() );
+			System.out.println("- Nom Prenom : "+ evenement.getInscrits()[i].getMembre().getNomPrenom() + ",  Fourniture apportï¿½  : " + evenement.getInscrits()[i].getFournitures() );
 			System.out.println("\n");
 		}
 		System.out.println("-----------------");
 	}
 
+	public String suppressionMembrePossible() {
+		return "Suppression membre SecrÃ©taire imposible sans remplacement.";
+	}
 
 }
