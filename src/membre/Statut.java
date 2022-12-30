@@ -1,3 +1,6 @@
+/**
+ * enumeration de tous les statuts possibles dans le club 
+ */
 package membre;
 
 public enum Statut {

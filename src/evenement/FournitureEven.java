@@ -1,3 +1,6 @@
+/**
+ * classe d'une fourniture necessaire a un evenement
+ */
 package evenement;
 
 public class FournitureEven {

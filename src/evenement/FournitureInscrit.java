@@ -1,3 +1,6 @@
+/**
+ * classe d'une fourniture à amener par un inscrit à un evenement
+ */
 package evenement;
 
 public class FournitureInscrit {

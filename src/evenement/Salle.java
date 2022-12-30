@@ -1,3 +1,6 @@
+/**
+ * enumeration de l'ensemble des salles qu'il est possible de louer
+ */
 package evenement;
 
 public enum Salle {

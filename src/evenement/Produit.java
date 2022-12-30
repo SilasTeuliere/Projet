@@ -1,3 +1,6 @@
+/**
+ * enumeration de l'ensemble des prosuits necessaires pour une 3eme mi-temps
+ */
 package evenement;
 
 public enum Produit {

@@ -1,3 +1,6 @@
+/**
+ * classe d'un inscrit à un evenement
+ */
 package evenement;
 
 import membre.Membre;
