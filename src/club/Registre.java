@@ -5,7 +5,6 @@ package club;
 
 import java.time.LocalDateTime;
 
-import evenement.Evenement;
 import membre.Membre;
 import membre.President;
 import membre.Secretaire;
@@ -20,9 +19,9 @@ import membre.Tresorier;
 
 public class Registre {
 	
-	public static void main(String[] args) {
+	public static void mainTest(String[] args) {
+		//public static void main(String[] args) {
 		Club club = new Club();
-		Evenement[] evenements = new Evenement[0];
 			
     	President membrePresident = (President) club.ajoutMembre("George Gomez", "", "", "", Statut.PRESIDENT);
 		Secretaire membreSecretaire  = (Secretaire) club.ajoutMembre("Michel Polaref", "", "", "", Statut.SECRETAIRE);
@@ -45,22 +44,22 @@ public class Registre {
 		club.ajoutMembre("Nicolas Dliagas", "", "", "");
 		club.ajoutMembre("Nicolas Eliagas", "", "", "");
 		club.ajoutMembre("Nicolas Fliagas", "", "", "");
-		evenements = membrePresident.ajoutEven(evenements, LocalDateTime.parse("2023-02-20T12:15:00"), "Match des 1/8 de finale de la heineken cup");
-		evenements = membrePresident.ajoutEven(evenements, LocalDateTime.parse("2023-02-28T20:15:00"), "Match des 1/4 de finale de la heineken cup");
-		membreSecretaire.ecritMailMembre(club.getMembres(), evenements[1]);
-		membreSecretaire.ajoutInscrit(evenements[1], club.getMembres()[0], 20);
-		membreSecretaire.ajoutInscrit(evenements[1], club.getMembres()[3], 20);
-		membreSecretaire.ajoutInscrit(evenements[1], club.getMembres()[4], 20);
-		membreSecretaire.ajoutInscrit(evenements[1], club.getMembres()[6], 20);
-		membreSecretaire.ajoutInscrit(evenements[1], club.getMembres()[7], 20);
-		membreSecretaire.ajoutInscrit(evenements[1], club.getMembres()[8], 20);
-		membreSecretaire.ajoutInscrit(evenements[1], club.getMembres()[9], 20);
-		membreSecretaire.ajoutInscrit(evenements[1], club.getMembres()[11], 20);
-		membreSecretaire.ajoutInscrit(evenements[1], club.getMembres()[10], 20);
-		membreSecretaire.ajoutInscrit(evenements[1], club.getMembres()[14], 20);
-		membreSecretaire.ajoutInscrit(evenements[1], club.getMembres()[15], 20);
-		evenements[1].etablissementTabFourniture();
-		membreSecretaire.ecritMailInscrit(evenements[1]);		
+		club.setEvenements(membrePresident.ajoutEven(club.getEvenements(), LocalDateTime.parse("2023-02-20T12:15:00"), "Match des 1/8 de finale de la heineken cup"));
+		club.setEvenements(membrePresident.ajoutEven(club.getEvenements(), LocalDateTime.parse("2023-02-28T20:15:00"), "Match des 1/4 de finale de la heineken cup"));
+		membreSecretaire.ecritMailMembre(club.getMembres(), club.getEvenements()[1]);
+		membreSecretaire.ajoutInscrit(club.getEvenements()[1], club.getMembres()[0], 20);
+		membreSecretaire.ajoutInscrit(club.getEvenements()[1], club.getMembres()[3], 20);
+		membreSecretaire.ajoutInscrit(club.getEvenements()[1], club.getMembres()[4], 20);
+		membreSecretaire.ajoutInscrit(club.getEvenements()[1], club.getMembres()[6], 20);
+		membreSecretaire.ajoutInscrit(club.getEvenements()[1], club.getMembres()[7], 20);
+		membreSecretaire.ajoutInscrit(club.getEvenements()[1], club.getMembres()[8], 20);
+		membreSecretaire.ajoutInscrit(club.getEvenements()[1], club.getMembres()[9], 20);
+		membreSecretaire.ajoutInscrit(club.getEvenements()[1], club.getMembres()[11], 20);
+		membreSecretaire.ajoutInscrit(club.getEvenements()[1], club.getMembres()[10], 20);
+		membreSecretaire.ajoutInscrit(club.getEvenements()[1], club.getMembres()[14], 20);
+		membreSecretaire.ajoutInscrit(club.getEvenements()[1], club.getMembres()[15], 20);
+		club.getEvenements()[1].etablissementTabFourniture();
+		membreSecretaire.ecritMailInscrit(club.getEvenements()[1]);		
 		club.afficherMembres();
 		club.trieTableauParId();
 		club.afficherMembres();
@@ -72,7 +71,7 @@ public class Registre {
 		System.out.println(club.getMembres()[1].suppressionMembrePossible());
 		System.out.println(club.getMembres()[2].suppressionMembrePossible());
 		System.out.println(club.getMembres()[3].suppressionMembrePossible());
-		membreTresorier.listerAchatRestantLocation(evenements[1]);
+		membreTresorier.listerAchatRestantLocation(club.getEvenements()[1]);
 		club.getMembres()[0] = club.getMembres()[0].changerStatut(Statut.MEMBRE);
 		if (club.rechercherStatut(Statut.PRESIDENT) == null) {
 			System.out.println("Plus de président dans le club");
@@ -82,8 +81,8 @@ public class Registre {
 		nouveauPresident.changerStatut(Statut.PRESIDENT);
 		System.out.println("Président = " + nouveauPresident.getNomPrenom());
 		System.out.println(club.extraireInstructionsCamlMembre());
-		System.out.println(evenements[1].instructionOcamlFourniture());
-		System.out.println(evenements[1].extraireInstructionsCamlInscrit());
+		System.out.println(club.getEvenements()[1].instructionOcamlFourniture());
+		System.out.println(club.getEvenements()[1].extraireInstructionsCamlInscrit());
 		
 	}
 	

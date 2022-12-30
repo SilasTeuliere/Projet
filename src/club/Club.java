@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import evenement.Evenement;
 import membre.Membre;
 import membre.President;
 import membre.Secretaire;
@@ -20,6 +21,8 @@ public class Club {
 	private String numTelClub = "06.10.14.01.01";
 	private String adresse = "1 All. Gabriel Bicnus, 31000 Toulouse";
 	private Membre membres[] = null;
+	private Evenement[] evenements = null;
+	
 	private int NumeroIDNouveau = 0;
 	
 	public Membre[] getMembres() {
@@ -46,6 +49,14 @@ public class Club {
 		return nomClub + emailClub + numTelClub + adresse;
 	}
 	
+	public Evenement[] getEvenements() {
+		return evenements;
+	}
+
+	public void setEvenements(Evenement[] evenements) {
+		this.evenements = evenements;
+	}
+
 	/**
 	 * Trie le tableau Id du membre(Quand c'est pas trié de base)
 	 * @return

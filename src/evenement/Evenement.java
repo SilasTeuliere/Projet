@@ -217,7 +217,7 @@ public class Evenement {
 	 * @return
 	 */
 	public String instructionOcamlFourniture() {
-		String listFour = "[";
+		String listFour = "let fournitures = [\n";
 		int nbFournitures = fournitures.length;
 		for(int j = 0; j < nbFournitures; j++) {
 			listFour = listFour + "\"" + fournitures[j].getProduit().getNom() + "\", " + fournitures[j].getNbrTotal() +", " + fournitures[j].getPrixTotal() +", "

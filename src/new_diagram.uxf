@@ -51,6 +51,7 @@
 -numTelClub = "06.10.14.01.01": String
 -adresse = "1 All. Gabriel Bicnus, 31000 Toulouse": String
 -membres[] = null: Membre
+-evenements[] = null: Evenement
 -NumeroIDNouveau = 0: int
 --
 +getMembres(): Membre[]
@@ -58,6 +59,8 @@
 +getEmailClub(): String
 +getNumTelClub(): String
 +getAdresse(): String
++getEvenements(): Evenement[]
++setEvenements(Evenement[] evenements) : void
 +Publicite(): String
 +trieTableauParId(): Membre[]
 +ajoutMembre(String nomPrenom, String email, String adresse, String numTel, Statut statut): Membre

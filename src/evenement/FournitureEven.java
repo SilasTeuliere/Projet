@@ -8,12 +8,13 @@ public class FournitureEven {
 	private int nbrTotal;
 	private double prixTotal;
 	private int nbrAchete;
+
 	public FournitureEven(Produit produit, int nbrTotal, double prixTotal) {
 		this.produit = produit;
 		this.nbrTotal = nbrTotal;
 		this.prixTotal = prixTotal;
-
 	}
+
 	public int getNbrAchete() {
 		return nbrAchete;
 	}

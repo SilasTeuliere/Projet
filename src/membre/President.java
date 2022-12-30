@@ -39,7 +39,10 @@ public class President extends Membre {
 	 * @return
 	 */
 	public Evenement[] ajoutEven(Evenement[] evenements, LocalDateTime dateEven, String detail) {
-		List<Evenement> listeEvenement = new ArrayList<>(Arrays.asList(evenements));
+		List<Evenement> listeEvenement = new ArrayList<>();
+		if (evenements != null) {
+			listeEvenement = new ArrayList<>(Arrays.asList(evenements));
+		}
 	    listeEvenement.add(new Evenement(dateEven, detail));
 	    Evenement[] evenementsSortie = new Evenement[listeEvenement.size()];
 		return listeEvenement.toArray(evenementsSortie);
