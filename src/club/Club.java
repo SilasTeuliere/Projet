@@ -200,7 +200,17 @@ public class Club {
 		}
 		return null;
 	}
-	
+
+	/**
+	 * affiche le tableau des evenements
+	 */
+	public void afficherEvenements() {
+		for(int i  = 0; evenements.length > i; i++) {
+			System.out.println("- Date : "+ evenements[i].getDate() + ",  Description : " + evenements[i].getDescription() + "\n");
+		}
+		System.out.println("-----------------");
+	}
+
 	/**
 	 * creer programme Ocaml liste des membres
 	 * @return
@@ -220,5 +230,10 @@ public class Club {
 		}
 		texte = texte + "]\n";
 		return texte;
+	}
+
+	public void initMembres() {
+		membres = null;
+		NumeroIDNouveau = 0;
 	}
 }

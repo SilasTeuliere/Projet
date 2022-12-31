@@ -78,6 +78,9 @@ public class Evenement {
 	 * @return
 	 */
 	public boolean etablissementTabFourniture() {
+		if (inscrits == null)  {
+			return false;
+		}
 		int nbInscrit = inscrits.length;
 		// détermination de la salle et de son prix
 		if(!choixSalle(nbInscrit)) {

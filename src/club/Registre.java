@@ -19,9 +19,7 @@ import membre.Tresorier;
 
 public class Registre {
 	
-	public static void mainTest(String[] args) {
-		//public static void main(String[] args) {
-		Club club = new Club();
+		public static void test(Club club) {
 			
     	President membrePresident = (President) club.ajoutMembre("George Gomez", "", "", "", Statut.PRESIDENT);
 		Secretaire membreSecretaire  = (Secretaire) club.ajoutMembre("Michel Polaref", "", "", "", Statut.SECRETAIRE);
@@ -58,14 +56,13 @@ public class Registre {
 		membreSecretaire.ajoutInscrit(club.getEvenements()[1], club.getMembres()[10], 20);
 		membreSecretaire.ajoutInscrit(club.getEvenements()[1], club.getMembres()[14], 20);
 		membreSecretaire.ajoutInscrit(club.getEvenements()[1], club.getMembres()[15], 20);
-		club.getEvenements()[1].etablissementTabFourniture();
 		membreSecretaire.ecritMailInscrit(club.getEvenements()[1]);		
 		club.afficherMembres();
 		club.trieTableauParId();
 		club.afficherMembres();
 		club.suppMembre(club.getMembres()[3]);
 		club.afficherMembres();
-		Membre membre = club.trouverMembre(0);
+		Membre membre = club.trouverMembre(1);
 		System.out.println(membre.getNomPrenom());
 		System.out.println(club.getMembres()[0].suppressionMembrePossible());
 		System.out.println(club.getMembres()[1].suppressionMembrePossible());

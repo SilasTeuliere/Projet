@@ -49,10 +49,15 @@ public class Secretaire extends Membre {
 	 * @return
 	 */
 	public List<String> ecritMailInscrit(Evenement evenement){
+		if (!evenement.etablissementTabFourniture()) {
+			System.out.println("Evenement annulé");
+			return null;
+		}
+		
 		int nbInscrit = evenement.getInscrits().length;
 		for(int i = 0; i < nbInscrit ; i++) {
 			String mailInscrit = "Bonjour " + evenement.getInscrits()[i].getMembre().getNomPrenom() + ", \n"
-					+ "Notre troisième mis-temps pour " + evenement.getDescription() 
+					+ "Notre troisième mi-temps pour " + evenement.getDescription() 
 					+ " aura lieu à la salle " + evenement.getLieu().getNom() + " " + evenement.getLieu().getAdresse() +"\n"
 					+ "Merci d'amener les fournitures suivantes :  \n";
 				for(FournitureInscrit fournitureInscrit: evenement.getInscrits()[i].getFournitures()) {

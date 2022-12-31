@@ -67,21 +67,7 @@ public class President extends Membre {
 		nbEven--;
 		return evenements;
 	}
-	
-	
-	/**
-	 * affiche le tableau des evenements
-	 * @param evenements
-	 * @param nbEven
-	 */
-	public void afficherEvenCourant (Evenement[] evenements, int nbEven) {
-		for(int i  = 0; nbEven > i; i++) {
-			System.out.println("- Date : "+ evenements[i].getDate() + ",  Description : " + evenements[i].getDescription() );
-			System.out.println("\n");
-		}
-		System.out.println("-----------------");
-	}
-	
+		
 	/**
 	 * Methode inutile faisant de la redefinition
 	 */
