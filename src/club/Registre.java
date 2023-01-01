@@ -20,7 +20,7 @@ import membre.Tresorier;
 public class Registre {
 	
 		public static void test(Club club) {
-			
+		club.initMembres();
     	President membrePresident = (President) club.ajoutMembre("George Gomez", "", "", "", Statut.PRESIDENT);
 		Secretaire membreSecretaire  = (Secretaire) club.ajoutMembre("Michel Polaref", "", "", "", Statut.SECRETAIRE);
 		Tresorier membreTresorier = (Tresorier) club.ajoutMembre("Jonathan Paleton", "", "", "", Statut.TRESORIER);
@@ -60,7 +60,7 @@ public class Registre {
 		club.afficherMembres();
 		club.trieTableauParId();
 		club.afficherMembres();
-		club.suppMembre(club.getMembres()[3]);
+		club.suppMembre(club.getMembres()[3].getId());
 		club.afficherMembres();
 		Membre membre = club.trouverMembre(1);
 		System.out.println(membre.getNomPrenom());
@@ -69,11 +69,11 @@ public class Registre {
 		System.out.println(club.getMembres()[2].suppressionMembrePossible());
 		System.out.println(club.getMembres()[3].suppressionMembrePossible());
 		membreTresorier.listerAchatRestantLocation(club.getEvenements()[1]);
-		club.getMembres()[0] = club.getMembres()[0].changerStatut(Statut.MEMBRE);
+		club.changerStatut(club.getMembres()[0].getId(), Statut.MEMBRE);
 		if (club.rechercherStatut(Statut.PRESIDENT) == null) {
 			System.out.println("Plus de président dans le club");
 		}
-		club.getMembres()[14] = club.getMembres()[14].changerStatut(Statut.PRESIDENT);
+		club.changerStatut(club.getMembres()[14].getId(), Statut.PRESIDENT);
 		President nouveauPresident = (President) club.rechercherStatut(Statut.PRESIDENT);
 		nouveauPresident.changerStatut(Statut.PRESIDENT);
 		System.out.println("Président = " + nouveauPresident.getNomPrenom());

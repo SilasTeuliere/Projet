@@ -64,6 +64,7 @@ public class Membre {
 	
 	/**
 	 * Changer le statut d'un membre
+	 * Attention ne sauve pas le changement => à mettre dans Club...
 	 * @param statut
 	 */
 	public Membre changerStatut(Statut statut) {

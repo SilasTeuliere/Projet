@@ -35,6 +35,8 @@ public class Menu {
 				+ " - '3' pour finaliser la préparation - check list reste à faire pour le trésorier\n"
 				+ " - 'L1' pour lister les membres\n"
 				+ " - 'L2' pour lister les événements\n"			
+				+ " - 'S' pour lister supprimer un membre\n"			
+				+ " - 'C' pour changer le statut d'un membre\n"			
 				+ " - 'retour chariot' pour sortir"
 				);
 				
@@ -75,7 +77,7 @@ public class Menu {
 				System.out.println("Adresse postale :");
 				adresse = sc.nextLine();
 				System.out.println("Numéro de téléphone :");
-				adresse = sc.nextLine();
+				numTel = sc.nextLine();
 				sauvegarderMembres(club, nomPrenom, email, adresse, numTel, i);
 			}
 			i++;
@@ -204,6 +206,77 @@ public class Menu {
 				}				
 			}
 		} while (!saisie.equals(""));
+	}
+
+	/**
+	 * supprime un membre du club
+	 * @param club
+	 */
+	public static void suprimerMembre(Club club) {
+		String saisie = "";
+		int numeroId;
+		System.out.println("Suppression d'un membre");
+		System.out.println("Numéro membre (retour chariot pour sortir) :");
+		saisie = sc.nextLine();
+		try {
+			numeroId = Integer.parseInt(saisie);
+		} catch (NumberFormatException e) {
+			System.out.println("Saisir un nombre entier Positif :");
+			return;
+		}
+		if (numeroId >= 0 ) {
+			Membre membre = club.trouverMembre(numeroId); 
+			if (membre == null) {
+				System.out.println("Personne non trouvée saisir un autre n°");
+			} else {
+				System.out.println("Membre concerné : " + membre.getNomPrenom() + " (Confirmer en tapant 'o' ou 'O')");
+				saisie = sc.nextLine();
+				if (saisie.length() > 0 && saisie.toUpperCase().charAt(0) == 'O') {
+				  club.suppMembre(numeroId);
+				}
+			}				
+		}		
+	}
+
+	/**
+	 * Change le statut d'un membre
+	 * @param club
+	 */
+	public static void changerStatut(Club club) {
+		String saisie = "";
+		int numeroId;
+		System.out.println("Changement du statut d'un membre");
+		System.out.println("Numéro membre (retour chariot pour sortir) :");
+		saisie = sc.nextLine();
+		try {
+			numeroId = Integer.parseInt(saisie);
+		} catch (NumberFormatException e) {
+			System.out.println("Saisir un nombre entier Positif :");
+			return;
+		}
+		if (numeroId >= 0 ) {
+			Membre membre = club.trouverMembre(numeroId); 
+			if (membre == null) {
+				System.out.println("Personne non trouvée saisir un autre n°");
+			} else {
+				System.out.println("Membre concerné : " + membre.getNomPrenom() + " (Confirmer en tapant 'o' ou 'O')");
+				saisie = sc.nextLine();
+				if (saisie.length() > 0 && saisie.toUpperCase().charAt(0) == 'O') {
+					System.out.println("Nouveau statut :");
+					saisie = sc.nextLine();
+					// Le statut saisie doit être un de libéllé des statuts possibles
+					for (Statut statutTheo : Statut.values()) {
+			        	if (statutTheo.toString().equalsIgnoreCase(saisie)) {
+			        		club.changerStatut(numeroId, statutTheo);
+			        		return;
+			        	}
+			        }
+				    
+				}
+			}				
+		}		
+
+		
 	}
 
 }

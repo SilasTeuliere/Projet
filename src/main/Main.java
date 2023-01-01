@@ -73,7 +73,16 @@ public class Main {
 			// liste diverses - le deuxième caractère donne la liste à obtenir 
 			testerListe(club, saisie);
 			break;
+		case 'S':
+			// suprimer un membre 
+			Menu.suprimerMembre(club);
+			break;
+		case 'C':
+			// changer le statut d'un membre 
+			Menu.changerStatut(club);
+			break;
 		}
+		
 	}
 
 	/**
