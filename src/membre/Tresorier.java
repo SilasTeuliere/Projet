@@ -1,6 +1,4 @@
-/**
- * Classe heritant de membre concernant le tresorier du club
- */
+
 package membre;
 
 import evenement.Evenement;
@@ -8,6 +6,9 @@ import evenement.FournitureEven;
 import evenement.FournitureInscrit;
 import evenement.InscritEven;
 
+/**
+ * Classe heritant de membre concernant le tresorier du club
+ */
 public class Tresorier extends Membre{
 
 	public Tresorier(int id, String nomPrenom, String email, String adresse, String numTel, int anneeInscr, int derAnneeParticipation) {

@@ -1,6 +1,4 @@
-/**
- * Classe decrivant le club : son adresse et ses membres...
- */
+
 package club;
 
 import java.time.LocalDate;
@@ -16,6 +14,9 @@ import membre.Secretaire;
 import membre.Statut;
 import membre.Tresorier;
 
+/**
+ * Classe decrivant le club : son adresse et ses membres...
+ */
 public class Club {
 	private static String FICHIER_MEMBRE = "membre";
 	private String nomClub = "La 3eme Mi-Temps Toulousaine";

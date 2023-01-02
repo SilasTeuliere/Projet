@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe decrivant les evenements qu'organise le club : la salle ou il se deroule, les membres y etant inscrit...
+ */
 public class Evenement {
 	private LocalDateTime date ;
 	private String description;

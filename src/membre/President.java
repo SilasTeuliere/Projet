@@ -1,6 +1,4 @@
-/**
- * Classe heritant de membre concernant le president du club
- */
+
 package membre;
 
 import java.time.LocalDateTime;
@@ -10,6 +8,9 @@ import java.util.List;
 
 import evenement.Evenement;
 
+/**
+ * Classe heritant de membre concernant le president du club
+ */
 public class President extends Membre {
 	public President(int id, String nomPrenom, String email, String adresse, String numTel, int anneeInscr, int derAnneeParticipation) {
 		super(id, nomPrenom, email, adresse, numTel, Statut.PRESIDENT, anneeInscr, derAnneeParticipation);

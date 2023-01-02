@@ -1,10 +1,11 @@
-/**
- * classe d'un inscrit à un evenement
- */
+
 package evenement;
 
 import membre.Membre;
 
+/**
+ * classe d'un inscrit à un evenement
+ */
 public class InscritEven {
 	private Membre membre;
 	private double budjetPrevisionnel;

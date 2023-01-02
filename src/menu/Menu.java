@@ -11,7 +11,9 @@ import membre.President;
 import membre.Secretaire;
 import membre.Statut;
 
-
+/**
+ * Classe presentant la selection des actions que l'on peut faire dans l'appli
+ */
 public class Menu {
 	private static Scanner sc = new Scanner(System.in);
 	

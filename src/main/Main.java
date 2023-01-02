@@ -1,3 +1,4 @@
+
 package main;
 
 
@@ -8,6 +9,11 @@ import membre.Statut;
 import membre.Tresorier;
 import menu.Menu;
 
+/**
+ * @title 3eme mi-temps
+ * @author TEULIERE Silas 22003086
+ * @version 1.0.0 30 Decemebre 2022
+ */
 public class Main {
 
 	public static void main(String[] args) {

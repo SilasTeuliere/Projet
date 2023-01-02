@@ -1,8 +1,9 @@
+
+package membre;
+
 /**
  * enumeration de tous les statuts possibles dans le club 
  */
-package membre;
-
 public enum Statut {
 	PRESIDENT("Président"), TRESORIER("Trésorier"), SECRETAIRE("Secrétaire"), MEMBRE("Membre");
 	

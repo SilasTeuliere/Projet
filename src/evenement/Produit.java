@@ -1,8 +1,9 @@
+
+package evenement;
+
 /**
  * enumeration de l'ensemble des prosuits necessaires pour une 3eme mi-temps
  */
-package evenement;
-
 public enum Produit {
 	QUICHE("Quiche rectangulaire", 20.00, 0.10), 
 	PIZZA("Pizza rectangulaire", 15.00, 0.10), 

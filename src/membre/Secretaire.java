@@ -1,6 +1,4 @@
-/**
- * Classe heritant de membre concernant le secretaire du club
- */
+
 package membre;
 
 import java.util.ArrayList;
@@ -11,6 +9,9 @@ import evenement.Evenement;
 import evenement.FournitureInscrit;
 import evenement.InscritEven;
 
+/**
+ * Classe heritant de membre concernant le secretaire du club
+ */
 public class Secretaire extends Membre {
 
 	private List<String> mailsMembre = new ArrayList<>();

@@ -7,6 +7,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+/**
+ * Classe qui permet l'ecriture et la lecture des données qu'on veut faire persister 
+ */
 public class AccesDonnees {
 	/**
 	 * ecriture dans le fichier, dont le nom est fourni, les données passées en entrées

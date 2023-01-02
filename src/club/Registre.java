@@ -1,6 +1,3 @@
-/**
- * Classe principale pour les tests de chaque Methode et la generation du OCAML...
- */
 package club;
 
 import java.time.LocalDateTime;
@@ -11,7 +8,8 @@ import membre.Secretaire;
 import membre.Statut;
 import membre.Tresorier;
 
-/**											
+/**				
+ * Classe principale pour les tests de chaque Methode et la generation du OCAML...							
  * 										DISLAIMER
  * Toutes les données utilisées pour la creation du Club ou des membres sont des données de test.
  * Que ce soit numéro de telephone, email, adresse ou autre...

@@ -1,8 +1,9 @@
+
+package evenement;
+
 /**
  * classe d'une fourniture necessaire a un evenement
  */
-package evenement;
-
 public class FournitureEven {
 	private Produit produit;
 	private int nbrTotal;

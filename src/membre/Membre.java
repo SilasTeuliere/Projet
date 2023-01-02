@@ -1,8 +1,9 @@
+
+package membre;
+
 /**
  * Description de chaque Membre du club (adresse, Nom prenom, email...)
  */
-package membre;
-
 public class Membre {
 	private int id;
 	private String nomPrenom;

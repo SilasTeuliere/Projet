@@ -1,8 +1,8 @@
+
+package evenement;
 /**
  * classe d'une fourniture à amener par un inscrit à un evenement
  */
-package evenement;
-
 public class FournitureInscrit {
 	private Salle salle;		//une salle ou un produit mais pas les 2 a la fois
 	private Produit produit;

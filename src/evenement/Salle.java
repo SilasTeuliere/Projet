@@ -1,8 +1,9 @@
+
+package evenement;
+
 /**
  * enumeration de l'ensemble des salles qu'il est possible de louer
  */
-package evenement;
-
 public enum Salle {
 	PETITE_SALLE("Tircrabe", "2 rue de la coquillette 31200 TOULOUSE", 50.00, 10, 20),
 	MOYENNE_SALLE("Saint Exupery", "7 rue du Jambonnot 31200 TOULOUSE", 75.00, 21, 50),
