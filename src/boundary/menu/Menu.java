@@ -4,12 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
-import boundary.club.Club;
-import boundary.evenement.Evenement;
-import boundary.membre.Membre;
-import boundary.membre.President;
-import boundary.membre.Secretaire;
-import boundary.membre.Statut;
+import control.ControlerClub;
+import commun.Statut;
 
 /**
  * Classe presentant la selection des actions que l'on peut faire dans l'appli
@@ -51,7 +47,7 @@ public class Menu {
 	 * @param club
 	 * @param param
 	 */
-	public static void saisirMembres(Club club, char param) {
+	public static void saisirMembres(ControlerClub controlerClub, char param) {
 		// pour compléter il faudrait prévoir aussi la gestion d'un mot de passe - en particulier pour les membres du bureau
 		String nomPrenom = "";
 		String email = "";
@@ -64,7 +60,7 @@ public class Menu {
 		int i;
 		if (param == 'I') {
 			i = 0;
-			club.initMembres();
+			controlerClub.initMembres();
 		} else {
 			i = 3;
 		}
@@ -80,7 +76,7 @@ public class Menu {
 				adresse = sc.nextLine();
 				System.out.println("Numéro de téléphone :");
 				numTel = sc.nextLine();
-				sauvegarderMembres(club, nomPrenom, email, adresse, numTel, i);
+				sauvegarderMembres(controlerClub, nomPrenom, email, adresse, numTel, i);
 			}
 			i++;
 			// Saisie minimum un président, un secrétaire et trésorier - même si nomPrénom est non valorisé...
@@ -96,29 +92,29 @@ public class Menu {
 	 * @param numTel
 	 * @param i
 	 */
-	private static void sauvegarderMembres(Club club, String nomPrenom, String email, String adresse, String numTel,
+	private static void sauvegarderMembres(ControlerClub controlerClub, String nomPrenom, String email, String adresse, String numTel,
 			int i) {
 		switch (i) {
 		case 0:
 			if (nomPrenom.equals("")) {
 				nomPrenom = Statut.PRESIDENT.toString();
 			}
-			club.ajoutMembre(nomPrenom, email, adresse, numTel, Statut.PRESIDENT);
+			controlerClub.ajoutMembre(nomPrenom, email, adresse, numTel, Statut.PRESIDENT);
 			break;
 		case 1:
 			if (nomPrenom.equals("")) {
 				nomPrenom = Statut.SECRETAIRE.toString();
 			}
-			club.ajoutMembre(nomPrenom, email, adresse, numTel, Statut.SECRETAIRE);
+			controlerClub.ajoutMembre(nomPrenom, email, adresse, numTel, Statut.SECRETAIRE);
 			break;
 		case 2:
 			if (nomPrenom.equals("")) {
 				nomPrenom = Statut.TRESORIER.toString();
 			}
-			club.ajoutMembre(nomPrenom, email, adresse, numTel, Statut.TRESORIER);
+			controlerClub.ajoutMembre(nomPrenom, email, adresse, numTel, Statut.TRESORIER);
 			break;
 		default:
-			club.ajoutMembre(nomPrenom, email, adresse, numTel);
+			controlerClub.ajoutMembre(nomPrenom, email, adresse, numTel);
 		}
 	}
 
@@ -126,12 +122,7 @@ public class Menu {
 	 * Saisie des événements
 	 * @param club
 	 */
-	public static void saisirEvenements(Club club) {
-		
-		// Qui est le président - qui seul peut créer un événement
-		// pour compléter il faudrait faire saisir son nom prénom et son mot de passe au président
-		President president = (President) club.rechercherStatut(Statut.PRESIDENT);
-		
+	public static void saisirEvenements(ControlerClub controlerClub) {
 		System.out.println("---------------------------------------------------------");
 		LocalDateTime dateEvenement;
 		String description = "";
@@ -148,7 +139,7 @@ public class Menu {
 				dateHeure += "T" + sc.nextLine() + ":00";
 				try {
 				  dateEvenement = LocalDateTime.parse(dateHeure);
-				  club.setEvenements(president.ajoutEven(club.getEvenements(), dateEvenement, description)) ;
+				  controlerClub.creerEvenements(dateEvenement, description) ;
 				} catch (DateTimeParseException e) {
 				  System.out.println("Erreur sur la date ou l'heure saisie - ressaisir l'événement");
 				}
@@ -162,7 +153,7 @@ public class Menu {
 	 * Saisie des inscrits pour un événement
 	 * @param club
 	 */
-	public static void saisirInscriptions(Club club) {
+	public static void saisirInscriptions(ControlerClub club) {
 		
 		// Qui est le secrétaire - qui seul peut inscrire à un événement
 		// pour compléter il faudrait faire saisir son nom prénom et son mot de passe au secrétaire
@@ -214,7 +205,7 @@ public class Menu {
 	 * supprime un membre du club
 	 * @param club
 	 */
-	public static void suprimerMembre(Club club) {
+	public static void suprimerMembre(ControlerClub club) {
 		String saisie = "";
 		int numeroId;
 		System.out.println("Suppression d'un membre");
@@ -244,7 +235,7 @@ public class Menu {
 	 * Change le statut d'un membre
 	 * @param club
 	 */
-	public static void changerStatut(Club club) {
+	public static void changerStatut(ControlerClub club) {
 		String saisie = "";
 		int numeroId;
 		System.out.println("Changement du statut d'un membre");

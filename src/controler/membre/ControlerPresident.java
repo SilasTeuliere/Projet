@@ -1,21 +1,16 @@
 
-package boundary.membre;
+package controler.membre;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import boundary.evenement.Evenement;
+import entity.evenement.Evenement;
 
-/**
- * Classe heritant de membre concernant le president du club
- */
-public class President extends Membre {
-	public President(int id, String nomPrenom, String email, String adresse, String numTel, int anneeInscr, int derAnneeParticipation) {
-		super(id, nomPrenom, email, adresse, numTel, Statut.PRESIDENT, anneeInscr, derAnneeParticipation);
-		
-	}
+public class ControlerPresident  {
+	
+	public 
 	
 	/**
 	 * ajoute un evenement (presente du danger si elle est utilisée car necessite une taille de tableau suffisante)

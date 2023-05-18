@@ -1,5 +1,7 @@
 
-package boundary.membre;
+package entity.membre;
+
+import commun.Statut;
 
 /**
  * Description de chaque Membre du club (adresse, Nom prenom, email...)

@@ -1,18 +1,18 @@
 
-package boundary.club;
+package entity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import boundary.evenement.Evenement;
-import boundary.membre.Membre;
-import boundary.membre.President;
-import boundary.membre.Secretaire;
-import boundary.membre.Statut;
-import boundary.membre.Tresorier;
+import commun.Statut;
 import entity.AccesDonnees;
+import entity.evenement.Evenement;
+import entity.membre.Membre;
+import entity.membre.President;
+import entity.membre.Secretaire;
+import entity.membre.Tresorier;
 
 /**
  * Classe decrivant le club : son adresse et ses membres...
@@ -70,33 +70,6 @@ public class Club {
 		this.evenements = evenements;
 	}
 
-	/**
-	 * Trie le tableau Id du membre(Quand c'est pas trié de base)
-	 * @return
-	 */
-	public Membre[] trieTableauParId() {
-		int i = 0;
-		int nbMembres = membres.length;
-		
-		int nbMemb = nbMembres;
-        Membre aux = membres[0];
-        boolean trie = true;
-        while(trie){
-            trie = false;
-            i = 0;
-            while(i < nbMemb - 1){
-                if(membres[i].getId() > membres[i + 1].getId()){
-                    trie = true;
-                    aux = membres[i];
-                    membres[i] = membres[i + 1];
-                    membres[i + 1] = aux;
-                }
-                i++;
-            }
-            nbMemb--;
-        }
-        return membres;
-	}
 
 	// polymorphisme : un même nom de fonction avec des paramètres différents
 	/**
@@ -261,22 +234,6 @@ public class Club {
 		return membres[i];
 	}
 	
-	/**
-	 * restitue la liste de tout les membres faisant parties du club en indiquant quand ils appartiennent au bureau du Club
-	 */
-	public void afficherMembres () {
-		int nbMembres = membres.length;
-		for(int i  = 0; nbMembres > i; i++) {
-			System.out.println("- Id : "+ membres[i].getId() + ", Nom Prenom : " + membres[i].getNomPrenom() );
-			if(membres[i].getStatut().equals(Statut.PRESIDENT) 
-					|| membres[i].getStatut().equals(Statut.SECRETAIRE)
-					|| membres[i].getStatut().equals(Statut.TRESORIER)) {
-				System.out.println("	- " + membres[i].getStatut().toString() + " du club");
-			}
-			System.out.println("\n");
-		}
-		System.out.println("-----------------");
-	}
 	
 	/**
 	 * Recherche de la première personne ayant un statut donné
@@ -290,37 +247,6 @@ public class Club {
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * affiche le tableau des evenements
-	 */
-	public void afficherEvenements() {
-		for(int i  = 0; evenements.length > i; i++) {
-			System.out.println("- Date : "+ evenements[i].getDate() + ",  Description : " + evenements[i].getDescription() + "\n");
-		}
-		System.out.println("-----------------");
-	}
-
-	/**
-	 * creer programme Ocaml liste des membres
-	 * @return
-	 */
-	public String extraireInstructionsCamlMembre() {
-		int nbMembres = membres.length;
-		String texte = " let membres = [\n";
-		for(int i = 0; i < nbMembres; i++) {
-			if(i == nbMembres-1) {
-				texte = texte  + membres[i].getId() +", \"" + membres[i].getNomPrenom() +"\", \"" + membres[i].getEmail() 
-						+ "\", \"" + membres[i].getAdresse() +"\", \"" + membres[i].getNumTel() +"\", \"" + membres[i].getStatut()+ "\"\n";
-			}
-			else {
-				texte = texte + membres[i].getId() +", \"" + membres[i].getNomPrenom() +"\", \"" + membres[i].getEmail() 
-						+ "\", \"" + membres[i].getAdresse() +"\", \"" + membres[i].getNumTel() +"\", \"" + membres[i].getStatut()+ "\";\n";
-			}
-		}
-		texte = texte + "]\n";
-		return texte;
 	}
 	
 	public void changerStatut(int idMembre, Statut statut) {

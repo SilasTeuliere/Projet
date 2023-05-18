@@ -1,4 +1,4 @@
-package boundary.evenement;
+package entity.evenement;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

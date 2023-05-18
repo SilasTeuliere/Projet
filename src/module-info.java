@@ -1,4 +1,4 @@
 module Projet {
-	exports boundary.membre;
-	exports boundary.evenement;
+	exports entity.membre;
+	exports entity.evenement;
 }

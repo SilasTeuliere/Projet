@@ -1,7 +1,7 @@
 
-package boundary.evenement;
+package entity.evenement;
 
-import boundary.membre.Membre;
+import entity.membre.Membre;
 
 /**
  * classe d'un inscrit à un evenement

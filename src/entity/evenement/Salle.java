@@ -1,5 +1,5 @@
 
-package boundary.evenement;
+package entity.evenement;
 
 /**
  * enumeration de l'ensemble des salles qu'il est possible de louer

@@ -2,12 +2,12 @@
 package boundary.main;
 
 
-import boundary.club.Club;
 import boundary.club.Registre;
-import boundary.membre.Secretaire;
-import boundary.membre.Statut;
-import boundary.membre.Tresorier;
 import boundary.menu.Menu;
+import commun.Statut;
+import control.ControlerClub;
+import entity.membre.Secretaire;
+import entity.membre.Tresorier;
 
 /**
  * @title 3eme mi-temps
@@ -19,7 +19,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		// Pour l'instant, j'instantie le club avec les informations du constructeur - la persistance de ces informations sera faite ultérieurement
-		final Club club = new Club();
+		final ControlerClub club = new ControlerClub();
 		String saisie;
 		do {
 			saisie = Menu.choisirAction();
@@ -38,7 +38,7 @@ public class Main {
 	 * @param club
 	 * @param saisie
 	 */
-	private static void testerAction(final Club club, String saisie) {
+	private static void testerAction(final ControlerClub club, String saisie) {
 		switch (saisie.toUpperCase().charAt(0)) {
 		case 'T':
 			// appel de toutes les méthodes en test sans persistance
@@ -96,7 +96,7 @@ public class Main {
 	 * @param club
 	 * @param saisie
 	 */
-	private static void testerListe(final Club club, String saisie) {
+	private static void testerListe(final ControlerClub club, String saisie) {
 		switch (saisie.toUpperCase().charAt(1)) {
 		case '1':
 			club.afficherMembres();

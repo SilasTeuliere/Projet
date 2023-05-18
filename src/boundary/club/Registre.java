@@ -2,11 +2,12 @@ package boundary.club;
 
 import java.time.LocalDateTime;
 
-import boundary.membre.Membre;
-import boundary.membre.President;
-import boundary.membre.Secretaire;
-import boundary.membre.Statut;
-import boundary.membre.Tresorier;
+import commun.Statut;
+import control.ControlerClub;
+import entity.membre.Membre;
+import entity.membre.President;
+import entity.membre.Secretaire;
+import entity.membre.Tresorier;
 
 /**				
  * Classe principale pour les tests de chaque Methode et la generation du OCAML...							
@@ -17,7 +18,7 @@ import boundary.membre.Tresorier;
 
 public class Registre {
 	
-		public static void test(Club club) {
+		public static void test(ControlerClub club) {
 		club.initMembres();
     	President membrePresident = (President) club.ajoutMembre("George Gomez", "", "", "", Statut.PRESIDENT);
 		Secretaire membreSecretaire  = (Secretaire) club.ajoutMembre("Michel Polaref", "", "", "", Statut.SECRETAIRE);

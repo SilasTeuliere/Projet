@@ -1,5 +1,5 @@
 
-package boundary.membre;
+package commun;
 
 /**
  * enumeration de tous les statuts possibles dans le club 

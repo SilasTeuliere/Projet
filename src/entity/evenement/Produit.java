@@ -1,5 +1,5 @@
 
-package boundary.evenement;
+package entity.evenement;
 
 /**
  * enumeration de l'ensemble des prosuits necessaires pour une 3eme mi-temps

@@ -1,13 +1,14 @@
 
-package boundary.membre;
+package entity.membre;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import boundary.evenement.Evenement;
-import boundary.evenement.FournitureInscrit;
-import boundary.evenement.InscritEven;
+import commun.Statut;
+import entity.evenement.Evenement;
+import entity.evenement.FournitureInscrit;
+import entity.evenement.InscritEven;
 
 /**
  * Classe heritant de membre concernant le secretaire du club

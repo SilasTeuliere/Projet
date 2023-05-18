@@ -1,5 +1,5 @@
 
-package boundary.evenement;
+package entity.evenement;
 
 /**
  * classe d'une fourniture à amener par un inscrit à un evenement
