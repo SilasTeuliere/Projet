@@ -1,4 +1,4 @@
 module Projet {
-	exports membre;
-	exports evenement;
+	exports boundary.membre;
+	exports boundary.evenement;
 }
