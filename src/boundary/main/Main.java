@@ -1,13 +1,10 @@
 
 package boundary.main;
 
-
+import boundary.club.BoundaryClub;
 import boundary.club.Registre;
 import boundary.menu.Menu;
-import commun.Statut;
-import control.ControlerClub;
-import entity.membre.Secretaire;
-import entity.membre.Tresorier;
+import controler.ControlerClub;
 
 /**
  * @title 3eme mi-temps
@@ -57,23 +54,20 @@ public class Main {
 			Menu.saisirEvenements(club);
 			break;
 		case '1':
-			// Envoyer mail d'information par le secrétaire pour le premier événement
-			Secretaire secretaire1 = (Secretaire) club.rechercherStatut(Statut.SECRETAIRE);
-			secretaire1.ecritMailMembre(club.getMembres(), club.getEvenements()[0]);
+			// Envoyer mail de commande par le secrétaire pour un événement
+			Menu.ecrireMailMembreParSecretaire(club);
 			break;
 		case 'I':
 			// Saisir inscriptions
 			Menu.saisirInscriptions(club);
 			break;
 		case '2':
-			// Envoyer mail de commande par le secrétaire pour le premier événement
-			Secretaire secretaire2 = (Secretaire) club.rechercherStatut(Statut.SECRETAIRE);
-			secretaire2.ecritMailInscrit(club.getEvenements()[0]);
+			// Envoyer mail de commande par le secrétaire pour un événement
+			Menu.ecrireMailInscritParSecretaire(club);
 			break;
 		case '3':
 			// reste à faire par le trésorier pour le premier événement
-			Tresorier tresorier = (Tresorier) club.rechercherStatut(Statut.TRESORIER);
-			tresorier.listerAchatRestantLocation(club.getEvenements()[0]);
+			Menu.listerAchatRestantLocationParTresorier(club);
 			break;
 		case 'L':
 			// liste diverses - le deuxième caractère donne la liste à obtenir 
@@ -81,7 +75,7 @@ public class Main {
 			break;
 		case 'S':
 			// suprimer un membre 
-			Menu.suprimerMembre(club);
+			Menu.supprimerMembre(club);
 			break;
 		case 'C':
 			// changer le statut d'un membre 
@@ -99,10 +93,10 @@ public class Main {
 	private static void testerListe(final ControlerClub club, String saisie) {
 		switch (saisie.toUpperCase().charAt(1)) {
 		case '1':
-			club.afficherMembres();
+			BoundaryClub.afficherMembres(club);
 			break;
 		case '2':
-			club.afficherEvenements();
+			BoundaryClub.afficherEvenements(club);
 			break;
 		}
 	}

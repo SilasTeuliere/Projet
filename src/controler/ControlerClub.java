@@ -1,26 +1,43 @@
 
-package control;
+package controler;
 
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import entity.membre.President;
 import commun.Statut;
 import entity.Club;
 import entity.evenement.Evenement;
 import entity.membre.Membre;
 
 /**
- * Classe decrivant le club : son adresse et ses membres...
+ * Classe decrivant le club : son adresse et ses membres, les événements proposés...
+ */
+/**
+ * @author silas
+ *
+ */
+/**
+ * @author silas
+ *
  */
 public class ControlerClub {
 	private Club club;
-	public ControlerClub(Club club) {
-		this.club = club;
+	public ControlerClub() {
+		this.club = new Club();
 	}
 	
+
+	public Club getClub() {
+		return club;
+	}
+
+
+	public void setClub(Club club) {
+		this.club = club;
+	}
+
 
 	/**
 	 * Restitue la liste de tous les membres avec leur statut
@@ -102,8 +119,9 @@ public class ControlerClub {
 	 * @param numTel
 	 * @param statut
 	 */
-	public Membre ajoutMembre(String nomPrenom, String email, String adresse, String numTel, Statut statut) {
-		return club.ajoutMembre(nomPrenom, email, adresse, numTel, statut);
+	public int ajoutMembre(String nomPrenom, String email, String adresse, String numTel, Statut statut) {
+		Membre membre = Membre.ajoutMembre(club, nomPrenom, email, adresse, numTel, statut);
+		return membre.getId();
 	}
 
 	/**
@@ -114,7 +132,7 @@ public class ControlerClub {
 	 * @param numTel
 	 */
 	public void ajoutMembre(String nomPrenom, String email, String adresse, String numTel) {
-		club.ajoutMembre(nomPrenom, email, adresse, numTel);
+		Membre.ajoutMembre(club, nomPrenom, email, adresse, numTel);
 	}
 
 	/**
@@ -122,7 +140,7 @@ public class ControlerClub {
 	 * @param id - identifiant du membre
 	 */
 	public void suppMembre(int id){
-		club.suppMembre(id);
+		Membre.suppMembre(club, id);
 	}
 	
 	/**
@@ -130,17 +148,26 @@ public class ControlerClub {
 	 * @param id
 	 * @return
 	 */
-	public Membre trouverMembre(int id) {
-		return club.trouverMembre(id);
+	public String trouverMembre(int id) {
+		Membre membre = Membre.trouverMembre(club, id);
+		if (membre == null) {
+			return null;
+		}
+		return membre.getNomPrenom();
 	}
+
 	
 	/**
 	 * Recherche de la première personne ayant un statut donné
 	 * @param statut
-	 * @return
+	 * @return identifiant
 	 */
-	public Membre rechercherStatut(Statut statut) {
-		return club.rechercherStatut(statut);
+	public int rechercherStatut(Statut statut) {
+		Membre membre = Membre.rechercherStatut(club, statut);
+		if (membre == null) {
+			return -1;
+		}
+		return membre.getId();
 	}
 
 	/**
@@ -169,9 +196,10 @@ public class ControlerClub {
 	 * change le status d'un membre du club
 	 * @param idMembre
 	 * @param statut
+	 * @return indicateur message d'information
 	 */
-	public void changerStatut(int idMembre, Statut statut) {
-		club.changerStatut(idMembre, statut);
+	public int changerStatut(int idMembre, Statut statut) {
+		return Membre.changerStatut(club, idMembre, statut);
 	}
 
 
@@ -179,13 +207,32 @@ public class ControlerClub {
 	 * réinitialise la liste des membres
 	 */
 	public void initMembres() {
-		club.initMembres();
+		Membre.initMembres(club);
 	}
 	
-	public void creerEvenement(LocalDateTime dateEven, String detail) {
-		// Qui est le président - qui seul peut créer un événement
-		// pour compléter il faudrait faire saisir son nom prénom et son mot de passe au président
-		President president = (President) club.rechercherStatut(Statut.PRESIDENT);
-		club.setEvenements(president.ajoutEven(club.getEvenements(), dateEven, detail));
+	
+	/**
+	 * vérifie l'existence d'un événement à la date donnée
+	 * @param dateEven date et heure de l'événement
+	 * @return booléen indiquant s'il existe un événement à cette date
+	 */
+	public boolean existeEvenement(LocalDateTime dateEven) {
+		if (Evenement.rechercherEvenement(club, dateEven) == null) {
+			return false;
+		} else {
+		    return true;
+		}
 	}
+	
+	
+	/**
+	 * restitue un libellé 
+	 * @param id identifiant
+	 * @return libellé
+	 */
+	public String suppressionMembrePossible(int id) {
+		Membre membre = Membre.trouverMembre(club, id);
+		return membre.suppressionMembrePossible();
+	}
+		
 }

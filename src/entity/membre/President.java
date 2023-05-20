@@ -1,13 +1,7 @@
 
 package entity.membre;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import commun.Statut;
-import entity.evenement.Evenement;
 
 /**
  * Classe heritant de membre concernant le president du club
@@ -19,77 +13,30 @@ public class President extends Membre {
 	}
 	
 	/**
-	 * ajoute un evenement (presente du danger si elle est utilisée car necessite une taille de tableau suffisante)
-	 * @param evenements
-	 * @param evenement
-	 * @param nbEven
-	 * @return
-	 */
-	public Evenement[] ajoutEven(Evenement[] evenements, Evenement evenement, int nbEven) {
-		if(nbEven < evenements.length) {
-			evenements[nbEven-1] = evenement;
-		}
-		return evenements;
-	}
-	
-	// polymorphisme : un meme nom de fonction avec des paramêtres diffêrents
-	/**
-	 * ajoute un evenement au tableau des evenements en passant par une liste pour pas perdre de place
-	 * @param evenements
-	 * @param dateEven
-	 * @param detail
-	 * @return
-	 */
-	public Evenement[] ajoutEven(Evenement[] evenements, LocalDateTime dateEven, String detail) {
-		List<Evenement> listeEvenement = new ArrayList<>();
-		if (evenements != null) {
-			listeEvenement = new ArrayList<>(Arrays.asList(evenements));
-		}
-	    listeEvenement.add(new Evenement(dateEven, detail));
-	    Evenement[] evenementsSortie = new Evenement[listeEvenement.size()];
-		return listeEvenement.toArray(evenementsSortie);
-	}
-
-	/**
-	 * Ne doit plus marcher depuis l'optimisation de place avec l'usage de liste
-	 * (eventuellement a refaire avec l'usage de liste)
-	 * @param evenements
-	 * @param evenement
-	 * @param nbEven
-	 * @return
-	 */
-	public Evenement[] suppEven(Evenement[] evenements, Evenement evenement, int nbEven){
-		int i = 0;
-		while(!evenement.getDescription().equals(evenements[i].getDescription())) {
-			i++;
-		}
-		for(; i < nbEven - 1; i++) {
-			evenements[i] = evenements[i + 1];
-		}
-		nbEven--;
-		return evenements;
-	}
-		
-	/**
 	 * Methode inutile faisant de la redefinition
 	 */
 	public String suppressionMembrePossible() {
-		return "Suppression membre Président imposible sans remplacement.";
+		return "Suppression membre Président impossible sans remplacement.";
 	}
 	
-
-	/** 
-	 * Change le statut de l'ancien president
-	 * Redefinition de la methode de membre avec des avertissements
-	 * @param statut nouveau statut de l'ancien president du club
+	/**
+	 * Vérifie qu'on ne change pas le status du président
+	 * @return
 	 */
-	public Membre changerStatut(Statut statut) {
-		if (statut.equals(Statut.PRESIDENT)) {
-			System.out.println("Aucun changement action inutile");
-			return this;
-		} else {
-		    System.out.println("Attention à avoir un président d'association");
-		    return super.changerStatut(statut);
+	protected int verifierStatusExistant() {	
+		// On ne peut pas changer le status du président directement sans en avoir désigné un autre
+		return -3;
+	}
+	
+	/**
+	 * Change le status en membre 
+	 * @param status
+	 * @return
+	 */
+	protected Membre testerChangeStatus(Statut status) {
+		if (status.equals(Statut.PRESIDENT)) {
+			return super.changerStatut(Statut.MEMBRE);
 		}
+		return null;
 	}
 }

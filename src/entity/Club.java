@@ -1,38 +1,31 @@
 
 package entity;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import commun.Statut;
-import entity.AccesDonnees;
+import entity.dao.AccesDonnees;
 import entity.evenement.Evenement;
 import entity.membre.Membre;
-import entity.membre.President;
-import entity.membre.Secretaire;
-import entity.membre.Tresorier;
 
 /**
  * Classe decrivant le club : son adresse et ses membres...
  */
 public class Club {
-	private static String FICHIER_MEMBRE = "membre";
+	public static String FICHIER_MEMBRE = "membre";
 	private String nomClub = "La 3eme Mi-Temps Toulousaine";
 	private String emailClub = "3emeMiTempsTls@gmail.com";
 	private String numTelClub = "06.10.14.01.01";
 	private String adresse = "1 All. Gabriel Bicnus, 31000 Toulouse";
 	private Membre membres[] = null;
 	private Evenement[] evenements = null;
-	
+
 	private int NumeroIDNouveau = 0;
 	
 	public Club() {
 		// vérifier s'il existe un fichier de membres et si oui le charger
 		List<String> listeMembres = AccesDonnees.LireDonnees(FICHIER_MEMBRE);
 		if (listeMembres != null) {
-			transcoDeCSV(listeMembres);
+			Membre.transcoDeCSV(this, listeMembres);
 		}
 		
 		// reste à faire : charger les événements - charger les inscrits - un fichier par événement avec la date dans le nom de fichier
@@ -40,6 +33,10 @@ public class Club {
 	
 	public Membre[] getMembres() {
 		return membres;
+	}
+	
+	public void setMembres(Membre[] pMembres) {
+		membres = pMembres;
 	}
 
 	public String getNomClub() {
@@ -70,227 +67,12 @@ public class Club {
 		this.evenements = evenements;
 	}
 
-
-	// polymorphisme : un même nom de fonction avec des paramètres différents
-	/**
-	 * inscription d'un nouveau membre à la date du jour
-	 * @param nomPrenom
-	 * @param email
-	 * @param adresse
-	 * @param numTel
-	 * @param statut
-	 */
-	public Membre ajoutMembre(String nomPrenom, String email, String adresse, String numTel, Statut statut) {
-		NumeroIDNouveau++;
-		int annee = LocalDate.now().getYear();
-		Membre membre;
-		
-		switch (statut) {
-		case PRESIDENT:
-			membre = new President(NumeroIDNouveau, nomPrenom, email, adresse, numTel, annee, annee);
-			break;
-		case SECRETAIRE:
-			membre = new Secretaire(NumeroIDNouveau, nomPrenom, email, adresse, numTel, annee, annee);
-			break;
-		case TRESORIER:
-			membre = new Tresorier(NumeroIDNouveau, nomPrenom, email, adresse, numTel, annee, annee);
-			break;
-		default:
-			membre = new Membre(NumeroIDNouveau, nomPrenom, email, adresse, numTel, statut, annee, annee);
-		}
-		List<Membre> listeMembres = new ArrayList<>();
-		if (membres != null) {
-			listeMembres = new ArrayList<>(Arrays.asList(membres));
-		}
-		listeMembres.add(membre);
-		Membre[] membresNouveaux = new Membre[listeMembres.size()];
-		membres = listeMembres.toArray(membresNouveaux);
-		AccesDonnees.ecrireDonnees(transcoEnCSV(), FICHIER_MEMBRE);
-		
-		return membre;
+	public int getNumeroIDNouveau() {
+		return NumeroIDNouveau;
 	}
 
-	/**
-	 * inscription d'un nouveau membre à la date du jour - sans transmettre le statut => membre simple
-	 * @param nomPrenom
-	 * @param email
-	 * @param adresse
-	 * @param numTel
-	 */
-	public void ajoutMembre(String nomPrenom, String email, String adresse, String numTel) {
-		List<Membre> listeMembres = new ArrayList<>();
-		if (membres != null) {
-			listeMembres = new ArrayList<>(Arrays.asList(membres));
-		}
-		NumeroIDNouveau++;
-		int annee = LocalDate.now().getYear();
-		listeMembres.add(new Membre(NumeroIDNouveau, nomPrenom, email, adresse, numTel, Statut.MEMBRE, annee, annee));
-		Membre[] membresNouveaux = new Membre[listeMembres.size()];
-		membres = listeMembres.toArray(membresNouveaux);
-		AccesDonnees.ecrireDonnees(transcoEnCSV(), FICHIER_MEMBRE);
+	public void setNumeroIDNouveau(int numeroIDNouveau) {
+		NumeroIDNouveau = numeroIDNouveau;
 	}
 
-	/**
-	 * Transcodage de la liste des membres en CSV
-	 * @return liste des membres transcodé en CSV
-	 */
-	private List<String> transcoEnCSV() {
-		List<String> sortie = new ArrayList<>();
-		for (Membre membre: membres) {
-			String nouveauMembre = Integer.toString(membre.getId())+";"
-		                            + membre.getNomPrenom() + ";"
-		                            + membre.getEmail() + ";"
-		                            + membre.getAdresse() + ";"
-		                            + membre.getNumTel() + ";"
-		                            + membre.getStatut().toString() + ";"
-		                            + membre.getAnneeInscr() + ";"
-		                            + membre.getDerAnneeParticipation();
-			sortie.add(nouveauMembre);
-		}
-		return sortie;
-	}
-
-
-	/**
-	 * Transcodage d'une String CSV en Membre
-	 * @return liste des membres formaté en membre
-	 */
-	private void transcoDeCSV(List<String> membresCSV) {
-		List<Membre> listeMembres = new ArrayList<>();
-		int maxId = 0;
-		int id;
-		String nomPrenom;
-        String email;
-        String adresse;
-        String numTel; 
-        Statut statut = null;
-        int anneeInscription;
-        int anneeDer;
-		String[] donneeLue = null;
-		for (String membreCSV: membresCSV) {
-			donneeLue = membreCSV.split(";");
-			id = Integer.parseInt(donneeLue[0]);
-			if (id > maxId) {
-				maxId = id;
-			}
-			nomPrenom = donneeLue[1];
-	        email = donneeLue[2];
-	        adresse = donneeLue[3];
-	        numTel = donneeLue[4]; 
-	        for (Statut statutTheo : Statut.values()) {
-	        	if (statutTheo.toString().equals(donneeLue[5])) {
-	        		statut = statutTheo;
-	        	}
-	        }
-	        anneeInscription = Integer.parseInt(donneeLue[6]);
-	        anneeDer = Integer.parseInt(donneeLue[7]);
-	        Membre membre;
-	        switch (statut) {
-			case PRESIDENT:
-				membre = new President(id, nomPrenom, email, adresse, numTel, anneeInscription, anneeDer);
-				break;
-			case SECRETAIRE:
-				membre = new Secretaire(id, nomPrenom, email, adresse, numTel, anneeInscription, anneeDer);
-				break;
-			case TRESORIER:
-				membre = new Tresorier(id, nomPrenom, email, adresse, numTel, anneeInscription, anneeDer);
-				break;
-			default:
-				membre = new Membre(id, nomPrenom, email, adresse, numTel, statut, anneeInscription, anneeDer);
-			}
-			listeMembres.add(membre);
-		}
-		Membre[] membresNouveaux = new Membre[listeMembres.size()];
-		membres = listeMembres.toArray(membresNouveaux);
-		NumeroIDNouveau = maxId;
-	}
-
-	/**
-	 * suppression d'un membre
-	 * @param id - identifiant du membre
-	 */
-	public void suppMembre(int id){
-		//passage par une liste pour supprimer physiquement le membre concerné
-		List<Membre> listeMembres = new ArrayList<>(Arrays.asList(membres));
-		listeMembres.removeIf(membreLu -> membreLu.getId() == id);
-		Membre[] membresNouveaux = new Membre[listeMembres.size()];
-		membres = listeMembres.toArray(membresNouveaux);
-		AccesDonnees.ecrireDonnees(transcoEnCSV(), FICHIER_MEMBRE);
-	}
-	
-	/**
-	 * trouve le membre dont l'id est mis en entrée 
-	 * @param id
-	 * @return
-	 */
-	public Membre trouverMembre(int id) {
-		int i = 0;
-		while (i < membres.length && membres[i].getId() != id) {
-			i++;
-		}
-		if (i >= membres.length) {
-			return null; 
-		}
-		return membres[i];
-	}
-	
-	
-	/**
-	 * Recherche de la première personne ayant un statut donné
-	 * @param statut
-	 * @return
-	 */
-	public Membre rechercherStatut(Statut statut) {
-		for (Membre membre: membres) {
-			if (membre.getStatut().equals(statut)) {
-				return membre;
-			}
-		}
-		return null;
-	}
-	
-	public void changerStatut(int idMembre, Statut statut) {
-
-		int i = 0;
-		while (i < membres.length && membres[i].getId() != idMembre) {
-			i++;
-		}
-		if (i >= membres.length) {
-			System.out.println("Membre inconnu");
-			return;
-		}
-		
-		if (membres[i].getStatut().equals(statut)) {
-			System.out.println("Statut pré-existant");
-			return;
-		}
-		
-		Membre membre = membres[i];
-		
-		switch (statut) {
-		case PRESIDENT:
-			membres[i] = new President(membre.getId(), membre.getNomPrenom(), membre.getEmail(), membre.getAdresse(), 
-					membre.getNumTel(), membre.getAnneeInscr(), membre.getDerAnneeParticipation());
-			break;
-		case SECRETAIRE:
-			membres[i] = new Secretaire(membre.getId(), membre.getNomPrenom(), membre.getEmail(), membre.getAdresse(), 
-					membre.getNumTel(), membre.getAnneeInscr(), membre.getDerAnneeParticipation());
-			break;
-		case TRESORIER:
-			membres[i] = new Tresorier(membre.getId(), membre.getNomPrenom(), membre.getEmail(), membre.getAdresse(), 
-					membre.getNumTel(), membre.getAnneeInscr(), membre.getDerAnneeParticipation());
-			break;
-		default:
-			membres[i] = new Membre(membre.getId(), membre.getNomPrenom(), membre.getEmail(), membre.getAdresse(), 
-					membre.getNumTel(), statut, membre.getAnneeInscr(), membre.getDerAnneeParticipation());
-			break;
-		}
-		AccesDonnees.ecrireDonnees(transcoEnCSV(), FICHIER_MEMBRE);
-	}
-
-
-	public void initMembres() {
-		membres = null;
-		NumeroIDNouveau = 0;
-	}
 }

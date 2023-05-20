@@ -2,10 +2,6 @@
 package entity.membre;
 
 import commun.Statut;
-import entity.evenement.Evenement;
-import entity.evenement.FournitureEven;
-import entity.evenement.FournitureInscrit;
-import entity.evenement.InscritEven;
 
 /**
  * Classe heritant de membre concernant le tresorier du club
@@ -20,46 +16,28 @@ public class Tresorier extends Membre{
 	 * Methode inutile faisant de la redefinition
 	 */
 	public String suppressionMembrePossible() {
-		return "Suppression membre Tresorier imposible sans remplacement.";
+		return "Suppression membre Tresorier impossible sans remplacement.";
 	}
-
 	
 	/**
-	 * Lister les action que doit réaliser le tresorier avant l'evenement (Les achats manquants, Louer la salle et verifier le solde de l'evenement)
-	 * @param evenement evenement pour lequelle il fait les verifications
+	 * Change le status en membre 
+	 * @param status
+	 * @return
 	 */
-	public void listerAchatRestantLocation(Evenement evenement) {
-		// Recherche de ce qui reste à acheter
-		System.out.println("Listing des fournitures manquantes :");
-		double prixManquant;
-		double totalPrixManquant = 0;
-		for (FournitureEven fourniture : evenement.getFournitures()) {
-			int resteAcheter = fourniture.getNbrTotal() - fourniture.getNbrAchete();
-			prixManquant = Math.round(resteAcheter * fourniture.getProduit().getPrix() * 100.00) / 100.00;
-			if (resteAcheter > 0) {
-				System.out.println("- " +  resteAcheter + " " + fourniture.getProduit().getNom()
-						+ " manquent pour " + prixManquant + " euros");
-			}
-			totalPrixManquant += prixManquant;
+	protected Membre testerChangeStatus(Statut status) {
+		if (status.equals(Statut.TRESORIER)) {
+			return super.changerStatut(Statut.MEMBRE);
 		}
-		//prix de la salle
-		System.out.println("- location de la salle pour " + evenement.getLieu().getPrix()
-				+ " euros");
-		
-		// Total des liquidités pour payer la salle
-		double cumulLiquide = 0;
-		for (InscritEven inscrit : evenement.getInscrits()) {
-			for (FournitureInscrit fourniture : inscrit.getFournitures()) {
-				if (fourniture.getSalle() != null) {
-					cumulLiquide += fourniture.getPrix();
-					
-				}
-			}
-		}
-		
-		System.out.println("Disponibilité en liquide : " + Math.round(cumulLiquide * 100.00) / 100.00);
-		//solde de l'evenement
-		System.out.println("Solde pour l'événement : " + Math.round((cumulLiquide - evenement.getLieu().getPrix() - totalPrixManquant) * 100.00) / 100.00);
-		
+		return null;
 	}
+
+	/**
+	 * Vérifie qu'on ne change pas le status
+	 * @return
+	 */
+	protected int verifierStatusExistant() {	
+		// On informe qu'il faut trouver un autre tresorier...
+		return 2;
+	}
+
 }

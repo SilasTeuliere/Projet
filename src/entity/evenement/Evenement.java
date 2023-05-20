@@ -2,7 +2,10 @@ package entity.evenement;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import entity.Club;
 
 /**
  * Classe decrivant les evenements qu'organise le club : la salle ou il se deroule, les membres y etant inscrit...
@@ -53,188 +56,65 @@ public class Evenement {
 		return description;
 	}
 	
-	/**
-	 * effectue automatiquement le choix de la salle en fonction du nombre d'inscrit
-	 * @param nbInscrit
-	 * @return true si salle trouvé false si l'evenement trop ou trop peu de participant (à ameliorer)
-	 */
-	public boolean choixSalle(int nbInscrit) {
-		boolean bool = true;
-		if (Salle.PETITE_SALLE.getNbPersonneMin() <= nbInscrit && nbInscrit <= Salle.PETITE_SALLE.getNbPersonneMax()) {
-			this.lieu = Salle.PETITE_SALLE;
-		}
-		else if (Salle.MOYENNE_SALLE.getNbPersonneMin() <= nbInscrit && nbInscrit <= Salle.MOYENNE_SALLE.getNbPersonneMax()) {
-			this.lieu = Salle.MOYENNE_SALLE;
-		}
-		else if (Salle.GRANDE_SALLE.getNbPersonneMin() <= nbInscrit && nbInscrit <= Salle.GRANDE_SALLE.getNbPersonneMax()) {
-			this.lieu = Salle.GRANDE_SALLE;
-		}
-		else {
-			bool = false;
-		}
-		return bool;
+	public double getBudgetEven() {
+		return budgetEven;
 	}
-	
-	/**
-	 * etablissement de la liste des fournitures necessaires par rapport au nombres d'inscrit
-	 * prevoit pour chaque membre ce qu'il doit fournir 
-	 * @return
-	 */
-	public boolean etablissementTabFourniture() {
-		if (inscrits == null)  {
-			return false;
-		}
-		int nbInscrit = inscrits.length;
-		// détermination de la salle et de son prix
-		if(!choixSalle(nbInscrit)) {
-			return false;
-		}
-		this.budgetEven = lieu.getPrix();
-		constituerListeFournituresEvenement(nbInscrit);
-		
-		// détermination du budget à prévoir par chaque inscrits
-		double budgetParPersonne = this.budgetEven / nbInscrit;
-		constituerListeFournituresParInscrit(budgetParPersonne);
-		
-		return true;
+
+	public void setBudgetEven(double budgetEven) {
+		this.budgetEven = budgetEven;
 	}
 
 	/**
-	 * constitue la liste des fournitures pour chaque inscrit
-	 * @param budgetParPersonne
+	 * ajoute l'évenement transmis à la liste des événements un événement à la date donnée avec les informations transmises
+	 * @param club
+	 * @param dateEven date et heure de l'événement
+	 * @param detail information sur l'événement
 	 */
-	private void constituerListeFournituresParInscrit(double budgetParPersonne) {
-		double budgetIndividuRestant;
-		// Traité dans l'ordre des différents produits triés par ordre décroissants des prix
-		for (InscritEven inscrit: inscrits) {
-			budgetIndividuRestant = Math.round(budgetParPersonne * 100.00) / 100.00;
-			final List<FournitureInscrit> tableauFourniture = new ArrayList<FournitureInscrit>();
-			budgetIndividuRestant = determinerFournitureAAcheter(budgetIndividuRestant, tableauFourniture);
-			
-			//Si tout le budget d'une personne n'est pas utilisé le reste sert à payer la salle
-			if (budgetIndividuRestant > 0) {
-				final FournitureInscrit fournitureInscrit = 
-						new FournitureInscrit (lieu, null, 1, Math.round(budgetIndividuRestant * 100.00) / 100.00);
-				tableauFourniture.add(fournitureInscrit);
-			}
-			FournitureInscrit[] fournituresTab = new FournitureInscrit[tableauFourniture.size()];
-			inscrit.setFournitures(tableauFourniture.toArray(fournituresTab));
+	public static void ajouterEvenement(Club club, LocalDateTime dateEven, String detail) {
+		List<Evenement> listeEvenements = new ArrayList<>();
+		Evenement[] evenements = club.getEvenements();
+		if (evenements != null) {
+			listeEvenements = new ArrayList<>(Arrays.asList(evenements));
 		}
+	    listeEvenements.add(new Evenement(dateEven, detail));
+	    Evenement[] evenementsSortie = new Evenement[listeEvenements.size()];
+	    club.setEvenements(listeEvenements.toArray(evenementsSortie));
+	}
+	
+	/**
+	 * supprimer l'évenement transmis de la liste des événements
+	 * @param club
+	 * @param dateEven date et heure de l'événement
+	 */
+	public static void supprimerEvenement(Club club, LocalDateTime dateEven) {
+		Evenement[] evenements = club.getEvenements();
+		if (evenements != null) {
+			List<Evenement> listeEvenements = new ArrayList<>(Arrays.asList(evenements));
+           
+			for (Evenement evenement : listeEvenements) {
+				if (dateEven.equals(evenement.getDate())) {
+					listeEvenements.remove(evenement);
+				}
+			}
+			Evenement[] evenementsSortie = new Evenement[listeEvenements.size()];
+			club.setEvenements(listeEvenements.toArray(evenementsSortie));
+		}
+	}
+	
+	/**
+	 * Recherche d'un événement à la date donnée
+	 * @param club
+	 * @param dateEven date et heure de l'événement
+	 * @return booléen indiquant s'il existe un événement à cette date
+	 */
+	public static Evenement rechercherEvenement(Club club, LocalDateTime dateEven) {
+		final Evenement[] evenements = club.getEvenements();
+		for(int i  = 0; evenements.length > i; i++) {
+			if (dateEven.equals(evenements[i].getDate())) {
+				return evenements[i];
+			};
+		}
+		return null;
 	}
 
-	/**
-	 * determine pour un inscrit ce qu'il doit acheter
-	 * @param budgetIndividuRestant
-	 * @param tableauFourniture
-	 * @return
-	 */
-	private double determinerFournitureAAcheter(double budgetIndividuRestant,
-			final List<FournitureInscrit> tableauFourniture) {
-		int nbProd;
-		for (FournitureEven fourniture: fournitures) {
-			nbProd = 1;
-			while (nbProd <= (fourniture.getNbrTotal() - fourniture.getNbrAchete()) &&
-					fourniture.getProduit().getPrix() * nbProd <= budgetIndividuRestant) {
-				// il reste au moins nbprod de ce produit à acheter 
-				// et l'achat de nbprod de ce produit reste dans mon budget restant
-				nbProd++;
-			}
-			nbProd--;
-			if (nbProd > 0) {
-				// J'achète nbprod de ce produit là
-				final FournitureInscrit fournitureInscrit = new FournitureInscrit (null, fourniture.getProduit(), nbProd, nbProd * fourniture.getProduit().getPrix());
-				tableauFourniture.add(fournitureInscrit);
-				budgetIndividuRestant -= nbProd * fourniture.getProduit().getPrix();
-				fourniture.setNbrAchete(fourniture.getNbrAchete() + nbProd);
-			}
-		}
-		return budgetIndividuRestant;
-	}
-
-	/**
-	 * constitue la liste des fournitures pour l'evenement en fonction du nombre d'inscrit
-	 * @param nbInscrit
-	 */
-	private void constituerListeFournituresEvenement(int nbInscrit) {
-		int i = 0;
-		double produitParEven;
-		double prixProduitEven;
-		for (Produit produit : Produit.values()) { 
-			produitParEven = nbInscrit*produit.getParPersonne();
-			if(produitParEven != Math.floor(produitParEven)) {
-				produitParEven = Math.floor(produitParEven) + 1;
-			}
-			prixProduitEven = produitParEven * produit.getPrix();
-			this.budgetEven += prixProduitEven;
-			final FournitureEven fourniture = new FournitureEven(produit, (int)produitParEven, prixProduitEven );
-		    fournitures[i] = fourniture;
-		    i++;
-		}
-	}
-	
-	/**
-	 * creer programme Ocaml liste des inscrits
-	 * @return
-	 */
-	public String extraireInstructionsCamlInscrit() {
-		String listFour;
-		int nbInscrits = inscrits.length;
-		String texte = " let inscrit = [\n";
-		for(int i = 0; i < nbInscrits; i++) {
-			listFour = instructionOcamlFournitureInscrit(i);
-			
-			if(i == nbInscrits-1) {
-				texte = texte  + inscrits[i].getMembre().getId() +", \"" + inscrits[i].getMembre().getNomPrenom() +"\", \"" + inscrits[i].getBudjetReel() 
-						+ "\", \"" + inscrits[i].getBudjetReel() +"\", " + listFour + "\n";
-			}
-			else {
-				texte = texte  + inscrits[i].getMembre().getId() +", \"" + inscrits[i].getMembre().getNomPrenom() +"\", \"" + inscrits[i].getBudjetReel() 
-						+ "\", \"" + inscrits[i].getBudjetReel() +"\", " + listFour + ";\n";
-			}
-		}
-		texte = texte + "]\n";
-		return texte;
-	}
-
-	/**
-	 * creer liste des fournitures en OCAML
-	 * @return
-	 */
-	private String instructionOcamlFournitureInscrit(int i) {
-		String listFour = "[";
-		int nbFournitures = inscrits[i].getFournitures().length;
-		for(int j = 0; j < nbFournitures; j++) {
-			listFour = listFour + "\"" + inscrits[i].getFournitures()[j].getSalle() + "\", \"" + inscrits[i].getFournitures()[j].getProduit() + "\", " +
-					inscrits[i].getFournitures()[j].getNbr() +", " + inscrits[i].getFournitures()[j].getPrix();
-			if(j == nbFournitures-1) {
-				listFour = listFour + "]";
-			}
-			else {
-				listFour = listFour + ";";
-			}
-		}
-		return listFour;
-	}
-	
-	
-	
-	/**
-	 * creer liste des fournitures en OCAML
-	 * @return
-	 */
-	public String instructionOcamlFourniture() {
-		String listFour = "let fournitures = [\n";
-		int nbFournitures = fournitures.length;
-		for(int j = 0; j < nbFournitures; j++) {
-			listFour = listFour + "\"" + fournitures[j].getProduit().getNom() + "\", " + fournitures[j].getNbrTotal() +", " + fournitures[j].getPrixTotal() +", "
-					+ fournitures[j].getNbrAchete();
-			if(j == nbFournitures-1) {
-				listFour = listFour + "\n]\n";
-			}
-			else {
-				listFour = listFour + ";\n";
-			}
-		}
-		return listFour;
-	}
 }

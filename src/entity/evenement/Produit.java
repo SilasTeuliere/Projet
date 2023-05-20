@@ -2,7 +2,7 @@
 package entity.evenement;
 
 /**
- * enumeration de l'ensemble des prosuits necessaires pour une 3eme mi-temps
+ * enumeration de l'ensemble des produits necessaires pour une 3eme mi-temps
  */
 public enum Produit {
 	QUICHE("Quiche rectangulaire", 20.00, 0.10), 

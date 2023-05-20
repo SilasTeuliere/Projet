@@ -2,88 +2,58 @@
 package controler.membre;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
+import commun.Statut;
+import controler.ControlerClub;
 import entity.evenement.Evenement;
+import entity.membre.Membre;
 
+/**
+ * 
+ * @author silas
+ *
+ */
 public class ControlerPresident  {
 	
-	public 
 	
 	/**
-	 * ajoute un evenement (presente du danger si elle est utilisée car necessite une taille de tableau suffisante)
-	 * @param evenements
-	 * @param evenement
-	 * @param nbEven
+	 * indique si l'identifiant donnée en entrée correspond à un membre President
+	 * @param controlerClub
 	 * @return
 	 */
-	public Evenement[] ajoutEven(Evenement[] evenements, Evenement evenement, int nbEven) {
-		if(nbEven < evenements.length) {
-			evenements[nbEven-1] = evenement;
+	public static boolean estPresident(ControlerClub controlerClub,int iD) {
+		Membre membre = Membre.trouverMembre(controlerClub.getClub(), iD);
+		if (membre != null && Statut.PRESIDENT.equals(membre.getStatut())) {
+		   return true;
 		}
-		return evenements;
-	}
-	
-	// polymorphisme : un meme nom de fonction avec des paramêtres diffêrents
-	/**
-	 * ajoute un evenement au tableau des evenements en passant par une liste pour pas perdre de place
-	 * @param evenements
-	 * @param dateEven
-	 * @param detail
-	 * @return
-	 */
-	public Evenement[] ajoutEven(Evenement[] evenements, LocalDateTime dateEven, String detail) {
-		List<Evenement> listeEvenement = new ArrayList<>();
-		if (evenements != null) {
-			listeEvenement = new ArrayList<>(Arrays.asList(evenements));
-		}
-	    listeEvenement.add(new Evenement(dateEven, detail));
-	    Evenement[] evenementsSortie = new Evenement[listeEvenement.size()];
-		return listeEvenement.toArray(evenementsSortie);
-	}
-
-	/**
-	 * Ne doit plus marcher depuis l'optimisation de place avec l'usage de liste
-	 * (eventuellement a refaire avec l'usage de liste)
-	 * @param evenements
-	 * @param evenement
-	 * @param nbEven
-	 * @return
-	 */
-	public Evenement[] suppEven(Evenement[] evenements, Evenement evenement, int nbEven){
-		int i = 0;
-		while(!evenement.getDescription().equals(evenements[i].getDescription())) {
-			i++;
-		}
-		for(; i < nbEven - 1; i++) {
-			evenements[i] = evenements[i + 1];
-		}
-		nbEven--;
-		return evenements;
-	}
 		
-	/**
-	 * Methode inutile faisant de la redefinition
-	 */
-	public String suppressionMembrePossible() {
-		return "Suppression membre Président imposible sans remplacement.";
+		return false;
+		
 	}
 	
-
-	/** 
-	 * Change le statut de l'ancien president
-	 * Redefinition de la methode de membre avec des avertissements
-	 * @param statut nouveau statut de l'ancien president du club
+	/**
+	 * crée un événement à la date donnée avec les informations transmises
+	 * @param controlerClub
+	 * @param dateEven date et heure de l'événement
+	 * @param detail information sur l'événement
+	 * @param iD identifiant du président
 	 */
-	public Membre changerStatut(Statut statut) {
-		if (statut.equals(Statut.PRESIDENT)) {
-			System.out.println("Aucun changement action inutile");
-			return this;
-		} else {
-		    System.out.println("Attention à avoir un président d'association");
-		    return super.changerStatut(statut);
+	public static void creerEvenement(ControlerClub controlerClub, LocalDateTime dateEven, String detail, int iD) {
+		if (estPresident(controlerClub, iD)) {
+		   Evenement.ajouterEvenement(controlerClub.getClub(), dateEven, detail);
 		}
 	}
+	
+	/**
+	 * supprimer un événement à la date transmise
+	 * @param controlerClub
+	 * @param dateEven date et heure de l'événement
+	 * @param iD identifiant du président
+	 */
+	public static void supprimerEvenement(ControlerClub controlerClub, LocalDateTime dateEven, int iD) {
+		if (estPresident(controlerClub, iD)) {
+			Evenement.supprimerEvenement(controlerClub.getClub(), dateEven);
+		}
+	}
+	
 }
