@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import commun.Statut;
-import controler.ControlerClub;
 import controler.ControlerEvenement;
+import controler.IControlerClub;
 import entity.evenement.Evenement;
 import entity.evenement.FournitureInscrit;
 import entity.evenement.InscritEven;
@@ -23,7 +23,7 @@ public class ControlerSecretaire {
 	 * @param controlerClub
 	 * @return
 	 */
-	public static boolean estSecretaire(ControlerClub controlerClub,int iD) {
+	public static boolean estSecretaire(IControlerClub controlerClub,int iD) {
 		Membre membre = Membre.trouverMembre(controlerClub.getClub(), iD);
 		if (membre != null && Statut.SECRETAIRE.equals(membre.getStatut())) {
 		   return true;
@@ -41,7 +41,7 @@ public class ControlerSecretaire {
 	 * @param montantPrevu montant que prévoit de verser le membre pour son inscription
 	 * @param iD
 	 */
-	public static void ajouterInscrit(ControlerClub controlerClub, LocalDateTime dateEvenement, int numeroIdMembre, double montantPrevu, int iD) {
+	public static void ajouterInscrit(IControlerClub controlerClub, LocalDateTime dateEvenement, int numeroIdMembre, double montantPrevu, int iD) {
 		if (estSecretaire(controlerClub, iD)) {
 		    Membre membre = Membre.trouverMembre(controlerClub.getClub(), numeroIdMembre);
 		    Evenement evenement = Evenement.rechercherEvenement(controlerClub.getClub(), dateEvenement);
@@ -56,7 +56,7 @@ public class ControlerSecretaire {
 	 * @param iD identifiant secrétaire
 	 * @return liste des mails à transmettre
 	 */
-	public static List<String> ecrireMailMembre(ControlerClub controlerClub, LocalDateTime dateEvenement, int iD){
+	public static List<String> ecrireMailMembre(IControlerClub controlerClub, LocalDateTime dateEvenement, int iD){
 		final List<String> mailsMembre = new ArrayList<>();
 		
 		if (estSecretaire(controlerClub, iD)) {
@@ -86,7 +86,7 @@ public class ControlerSecretaire {
 	 * @param iD identifiant secrétaire
 	 * @return liste des mails à transmettre
 	 */
-	public static List<String> ecrireMailInscrit(ControlerClub controlerClub, LocalDateTime dateEvenement, int iD) {
+	public static List<String> ecrireMailInscrit(IControlerClub controlerClub, LocalDateTime dateEvenement, int iD) {
 		final List<String> mailsInscrit = new ArrayList<>();
 		
 		if (estSecretaire(controlerClub, iD)) {

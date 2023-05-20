@@ -146,79 +146,88 @@ public class ControlerEvenement {
 		}
 		evenement.setFournitures(fournituresTrav);
 	}
-
+	
+	
 	/**
-	 * creer programme Ocaml liste des inscrits
-	 * @param controlerClub 
-	 * @param dateEvenement
-	 * @return
+	 * @author silas
+	 * classe contenant les compositions Ocalm
 	 */
-	public static String extraireInstructionsCamlInscrit(ControlerClub controlerClub, LocalDateTime dateEvenement) {
-		String listFour;
-		Evenement evenement = Evenement.rechercherEvenement(controlerClub.getClub(), dateEvenement);
-		InscritEven[] inscrits = InscritEven.listerInscrits(evenement);
-		int nbInscrits = inscrits.length;
-		String texte = " let inscrit = [\n";
-		for(int i = 0; i < nbInscrits; i++) {
-			listFour = instructionOcamlFournitureInscrit(inscrits[i]);
-			
-			if(i == nbInscrits-1) {
-				texte = texte  + inscrits[i].getMembre().getId() +", \"" + inscrits[i].getMembre().getNomPrenom() +"\", \"" + inscrits[i].getBudjetReel() 
-						+ "\", \"" + inscrits[i].getBudjetReel() +"\", " + listFour + "\n";
-			}
-			else {
-				texte = texte  + inscrits[i].getMembre().getId() +", \"" + inscrits[i].getMembre().getNomPrenom() +"\", \"" + inscrits[i].getBudjetReel() 
-						+ "\", \"" + inscrits[i].getBudjetReel() +"\", " + listFour + ";\n";
-			}
-		}
-		texte = texte + "]\n";
-		return texte;
-	}
+	public class OcalmEve{
 
-	/**
-	 * creer liste des fournitures en OCAML
-	 * @param inscrit
-	 * @return
-	 */
-	private static String instructionOcamlFournitureInscrit(InscritEven inscrit) {
-		String listFour = "[";
-		int nbFournitures = inscrit.getFournitures().length;
-		for(int j = 0; j < nbFournitures; j++) {
-			listFour = listFour + "\"" + inscrit.getFournitures()[j].getSalle() + "\", \"" + inscrit.getFournitures()[j].getProduit() + "\", " +
-					inscrit.getFournitures()[j].getNbr() +", " + inscrit.getFournitures()[j].getPrix();
-			if(j == nbFournitures-1) {
-				listFour = listFour + "]";
+		/**
+		 * creer programme Ocaml liste des inscrits
+		 * @param controlerClub 
+		 * @param dateEvenement
+		 * @return
+		 */
+		public static String extraireInstructionsCamlInscrit(IControlerClub controlerClub, LocalDateTime dateEvenement) {
+			String listFour;
+			Evenement evenement = Evenement.rechercherEvenement(controlerClub.getClub(), dateEvenement);
+			InscritEven[] inscrits = InscritEven.listerInscrits(evenement);
+			int nbInscrits = inscrits.length;
+			String texte = " let inscrit = [\n";
+			for(int i = 0; i < nbInscrits; i++) {
+				listFour = instructionOcamlFournitureInscrit(inscrits[i]);
+				
+				if(i == nbInscrits-1) {
+					texte = texte  + inscrits[i].getMembre().getId() +", \"" + inscrits[i].getMembre().getNomPrenom() +"\", \"" + inscrits[i].getBudjetReel() 
+							+ "\", \"" + inscrits[i].getBudjetReel() +"\", " + listFour + "\n";
+				}
+				else {
+					texte = texte  + inscrits[i].getMembre().getId() +", \"" + inscrits[i].getMembre().getNomPrenom() +"\", \"" + inscrits[i].getBudjetReel() 
+							+ "\", \"" + inscrits[i].getBudjetReel() +"\", " + listFour + ";\n";
+				}
 			}
-			else {
-				listFour = listFour + ";";
-			}
+			texte = texte + "]\n";
+			return texte;
 		}
-		return listFour;
-	}
 
-	/**
-	 * creer liste des fournitures en OCAML
-	 * @param controlerClub 
-	 * @param dateEvenement
-	 * @return
-	 */
-	public static String instructionOcamlFourniture(ControlerClub controlerClub, LocalDateTime dateEvenement) {
-		Evenement evenement = Evenement.rechercherEvenement(controlerClub.getClub(), dateEvenement);
-		FournitureEven[] fournitures = evenement.getFournitures();
-		String listFour = "let fournitures = [\n";
-		int nbFournitures = fournitures.length;
-		for(int j = 0; j < nbFournitures; j++) {
-			listFour = listFour + "\"" + fournitures[j].getProduit().getNom() + "\", " + fournitures[j].getNbrTotal() +", " + fournitures[j].getPrixTotal() +", "
-					+ fournitures[j].getNbrAchete();
-			if(j == nbFournitures-1) {
-				listFour = listFour + "\n]\n";
+		/**
+		 * creer liste des fournitures en OCAML
+		 * @param inscrit
+		 * @return
+		 */
+		private static String instructionOcamlFournitureInscrit(InscritEven inscrit) {
+			String listFour = "[";
+			int nbFournitures = inscrit.getFournitures().length;
+			for(int j = 0; j < nbFournitures; j++) {
+				listFour = listFour + "\"" + inscrit.getFournitures()[j].getSalle() + "\", \"" + inscrit.getFournitures()[j].getProduit() + "\", " +
+						inscrit.getFournitures()[j].getNbr() +", " + inscrit.getFournitures()[j].getPrix();
+				if(j == nbFournitures-1) {
+					listFour = listFour + "]";
+				}
+				else {
+					listFour = listFour + ";";
+				}
 			}
-			else {
-				listFour = listFour + ";\n";
-			}
+			return listFour;
 		}
-		return listFour;
-	}
 
+
+		/**
+		 * creer liste des fournitures en OCAML
+		 * @param controlerClub 
+		 * @param dateEvenement
+		 * @return
+		 */
+		public static String instructionOcamlFourniture(IControlerClub controlerClub, LocalDateTime dateEvenement) {
+			Evenement evenement = Evenement.rechercherEvenement(controlerClub.getClub(), dateEvenement);
+			FournitureEven[] fournitures = evenement.getFournitures();
+			String listFour = "let fournitures = [\n";
+			int nbFournitures = fournitures.length;
+			for(int j = 0; j < nbFournitures; j++) {
+				listFour = listFour + "\"" + fournitures[j].getProduit().getNom() + "\", " + fournitures[j].getNbrTotal() +", " + fournitures[j].getPrixTotal() +", "
+						+ fournitures[j].getNbrAchete();
+				if(j == nbFournitures-1) {
+					listFour = listFour + "\n]\n";
+				}
+				else {
+					listFour = listFour + ";\n";
+				}
+			}
+			return listFour;
+		}
+	}
+	
 
 }

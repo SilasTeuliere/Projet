@@ -13,7 +13,7 @@ import entity.dao.AccesDonnees;
 /**
  * Description de chaque Membre du club (adresse, Nom prenom, email...)
  */
-public class Membre {
+public class Membre extends Adherent {
 	private int id;
 	private String nomPrenom;
 	private String email;

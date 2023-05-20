@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import controler.AchatAffichage;
-import controler.ControlerClub;
+import controler.IControlerClub;
 import controler.membre.ControlerPresident;
 import controler.membre.ControlerSecretaire;
 import controler.membre.ControlerTresorier;
@@ -24,7 +24,7 @@ public class Menu {
 	
 	/**
 	 * Saisie des événements
-	 * @param club
+	 * @param data.club
 	 * @param sc
 	 */
 	public static String choisirAction() {
@@ -49,10 +49,10 @@ public class Menu {
 
 	/**
 	 * Saisie le bureau et tous les membres de l'association
-	 * @param club
+	 * @param data.club
 	 * @param param
 	 */
-	public static void saisirMembres(ControlerClub controlerClub, char param) {
+	public static void saisirMembres(IControlerClub controlerClub, char param) {
 		// pour compléter il faudrait prévoir aussi la gestion d'un mot de passe - en particulier pour les membres du bureau
 		String nomPrenom = "";
 		String email = "";
@@ -90,14 +90,14 @@ public class Menu {
 
 	/**
 	 * Enregistrement d'un membre de l'association
-	 * @param club
+	 * @param data.club
 	 * @param nomPrenom
 	 * @param email
 	 * @param adresse
 	 * @param numTel
 	 * @param i
 	 */
-	private static void sauvegarderMembres(ControlerClub controlerClub, String nomPrenom, String email, String adresse, String numTel,
+	private static void sauvegarderMembres(IControlerClub controlerClub, String nomPrenom, String email, String adresse, String numTel,
 			int i) {
 		switch (i) {
 		case 0:
@@ -125,9 +125,9 @@ public class Menu {
 
 	/**
 	 * Saisie des événements
-	 * @param club
+	 * @param data.club
 	 */
-	public static void saisirEvenements(ControlerClub controlerClub) {
+	public static void saisirEvenements(IControlerClub controlerClub) {
 		System.out.println("---------------------------------------------------------");
 		
 		// Seul le président est habilité à saisir un évenement
@@ -170,9 +170,9 @@ public class Menu {
 
 	/**
 	 * Saisie des inscrits pour un événement
-	 * @param club
+	 * @param data.club
 	 */
-	public static void saisirInscriptions(ControlerClub controlerClub) {
+	public static void saisirInscriptions(IControlerClub controlerClub) {
 		System.out.println("---------------------------------------------------------");
 		
 		// Seul le Secretaire est habilité à saisir une inscription
@@ -224,9 +224,9 @@ public class Menu {
 
 	/**
 	 * Mail aux membres
-	 * @param club
+	 * @param data.club
 	 */
-	public static void ecrireMailMembreParSecretaire(ControlerClub controlerClub) {
+	public static void ecrireMailMembreParSecretaire(IControlerClub controlerClub) {
 		System.out.println("---------------------------------------------------------");
 		
 		// Seul le Secretaire est habilité à écrire mail aux membres
@@ -253,9 +253,9 @@ public class Menu {
 
 	/**
 	 * Mail aux inscrits
-	 * @param club
+	 * @param data.club
 	 */
-	public static void ecrireMailInscritParSecretaire(ControlerClub controlerClub) {
+	public static void ecrireMailInscritParSecretaire(IControlerClub controlerClub) {
 		System.out.println("---------------------------------------------------------");
 		
 		// Seul le Secretaire est habilité à écrire mail aux inscrits
@@ -285,7 +285,7 @@ public class Menu {
 	 * @param controlerClub
 	 * @return identifiant du secrétaire
 	 */
-	private static int saisirIdSecretaire(ControlerClub controlerClub) {
+	private static int saisirIdSecretaire(IControlerClub controlerClub) {
 		// Pour l'instant je n'ai pas géré la gestion de mot de passe aussi la saisie de seulement l'identifiant du Secretaire est demandée en préalable
 		System.out.println(" Numéro identifiant du secretaire : (en cas de non saisie ou de saisie erronée retour au menu principal)");
 		String saisie = sc.nextLine();
@@ -306,7 +306,7 @@ public class Menu {
 	 * @param controlerClub
 	 * @return
 	 */
-	private static LocalDateTime saisieDateHeureEvenement(ControlerClub controlerClub) {
+	private static LocalDateTime saisieDateHeureEvenement(IControlerClub controlerClub) {
 		LocalDateTime dateEvenement = null;;
 		boolean existeEvent = false;
 		String dateHeure = "";
@@ -338,7 +338,7 @@ public class Menu {
 	 * supprime un membre du club
 	 * @param club
 	 */
-	public static void supprimerMembre(ControlerClub club) {
+	public static void supprimerMembre(IControlerClub club) {
 		String saisie = "";
 		int numeroId;
 		System.out.println("Suppression d'un membre");
@@ -368,7 +368,7 @@ public class Menu {
 	 * Change le statut d'un membre
 	 * @param club
 	 */
-	public static void changerStatut(ControlerClub club) {
+	public static void changerStatut(IControlerClub club) {
 		String saisie = "";
 		int numeroId;
 		System.out.println("Changement du statut d'un membre");
@@ -426,9 +426,9 @@ public class Menu {
 	
 	/**
 	 * lister des achats restant à faire pour la soirée et la location de la salle
-	 * @param club
+	 * @param data.club
 	 */
-	public static void listerAchatRestantLocationParTresorier(ControlerClub controlerClub) {
+	public static void listerAchatRestantLocationParTresorier(IControlerClub controlerClub) {
 		System.out.println("---------------------------------------------------------");
 		
 		// Seul le Tresorier est habilité à l'édition de la liste des produits manquant 
@@ -470,7 +470,7 @@ public class Menu {
 	 * @param controlerClub
 	 * @return identifiant du secrétaire
 	 */
-	private static int saisirIdTresorier(ControlerClub controlerClub) {
+	private static int saisirIdTresorier(IControlerClub controlerClub) {
 		// Pour l'instant je n'ai pas géré la gestion de mot de passe aussi la saisie de seulement l'identifiant du Secretaire est demandée en préalable
 		System.out.println(" Numéro identifiant du trésorier : (en cas de non saisie ou de saisie erronée retour au menu principal)");
 		String saisie = sc.nextLine();

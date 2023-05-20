@@ -5,8 +5,8 @@ import java.util.List;
 
 import boundary.menu.Menu;
 import commun.Statut;
-import controler.ControlerClub;
 import controler.ControlerEvenement;
+import controler.IControlerClub;
 import controler.membre.ControlerPresident;
 import controler.membre.ControlerSecretaire;
 import controler.membre.ControlerTresorier;
@@ -20,7 +20,7 @@ import controler.membre.ControlerTresorier;
 
 public class Registre {
 	
-		public static void test(ControlerClub controlerClub) {
+		public static void test(IControlerClub controlerClub) {
 		controlerClub.initMembres();
     	int numPresident = controlerClub.ajoutMembre("George Gomez", "", "", "", Statut.PRESIDENT);
 		int numSecretaire = controlerClub.ajoutMembre("Michel Polaref", "", "", "", Statut.SECRETAIRE);
@@ -93,8 +93,9 @@ public class Registre {
 		controlerClub.changerStatut(numPresident,Statut.PRESIDENT);
 		System.out.println("Président = " + controlerClub.trouverMembre(numPresident));
 		System.out.println(controlerClub.extraireInstructionsCamlMembre());
-		System.out.println(ControlerEvenement.instructionOcamlFourniture(controlerClub, LocalDateTime.parse("2023-03-08T20:30:00")));
-		System.out.println(ControlerEvenement.extraireInstructionsCamlInscrit(controlerClub, LocalDateTime.parse("2023-03-08T20:30:00")));
+		
+		System.out.println(ControlerEvenement.OcalmEve.instructionOcamlFourniture(controlerClub, LocalDateTime.parse("2023-03-08T20:30:00")));
+		System.out.println(ControlerEvenement.OcalmEve.extraireInstructionsCamlInscrit(controlerClub, LocalDateTime.parse("2023-03-08T20:30:00")));
 		
 	}
 		

@@ -22,18 +22,20 @@ import entity.membre.Membre;
  * @author silas
  *
  */
-public class ControlerClub {
+public class ControlerClub implements IControlerClub {
 	private Club club;
 	public ControlerClub() {
 		this.club = new Club();
 	}
 	
 
+	@Override
 	public Club getClub() {
 		return club;
 	}
 
 
+	@Override
 	public void setClub(Club club) {
 		this.club = club;
 	}
@@ -43,6 +45,7 @@ public class ControlerClub {
 	 * Restitue la liste de tous les membres avec leur statut
 	 * @return
 	 */
+	@Override
 	public List<String> listerMembres() {
 		StringBuilder str;
 		final Membre[] membres = club.getMembres();
@@ -66,6 +69,7 @@ public class ControlerClub {
 	 * Restitue la liste de tous les evenements
 	 * @return
 	 */
+	@Override
 	public List<String> listerEvenement(){
 		StringBuilder str;
 		final Evenement[] evenements = club.getEvenements();
@@ -85,6 +89,7 @@ public class ControlerClub {
 	 * Trie le tableau Id du membre(Quand c'est pas trié de base)
 	 * @return
 	 */
+	@Override
 	public Membre[] trieTableauParId() {
 		int i = 0;
 		final Membre[] membres = club.getMembres();
@@ -119,6 +124,7 @@ public class ControlerClub {
 	 * @param numTel
 	 * @param statut
 	 */
+	@Override
 	public int ajoutMembre(String nomPrenom, String email, String adresse, String numTel, Statut statut) {
 		Membre membre = Membre.ajoutMembre(club, nomPrenom, email, adresse, numTel, statut);
 		return membre.getId();
@@ -131,6 +137,7 @@ public class ControlerClub {
 	 * @param adresse
 	 * @param numTel
 	 */
+	@Override
 	public void ajoutMembre(String nomPrenom, String email, String adresse, String numTel) {
 		Membre.ajoutMembre(club, nomPrenom, email, adresse, numTel);
 	}
@@ -139,6 +146,7 @@ public class ControlerClub {
 	 * suppression d'un membre
 	 * @param id - identifiant du membre
 	 */
+	@Override
 	public void suppMembre(int id){
 		Membre.suppMembre(club, id);
 	}
@@ -148,6 +156,7 @@ public class ControlerClub {
 	 * @param id
 	 * @return
 	 */
+	@Override
 	public String trouverMembre(int id) {
 		Membre membre = Membre.trouverMembre(club, id);
 		if (membre == null) {
@@ -162,6 +171,7 @@ public class ControlerClub {
 	 * @param statut
 	 * @return identifiant
 	 */
+	@Override
 	public int rechercherStatut(Statut statut) {
 		Membre membre = Membre.rechercherStatut(club, statut);
 		if (membre == null) {
@@ -174,6 +184,7 @@ public class ControlerClub {
 	 * creer programme Ocaml liste des membres
 	 * @return
 	 */
+	@Override
 	public String extraireInstructionsCamlMembre() {
 		final Membre[] membres = club.getMembres();
 		int nbMembres = membres.length;
@@ -198,6 +209,7 @@ public class ControlerClub {
 	 * @param statut
 	 * @return indicateur message d'information
 	 */
+	@Override
 	public int changerStatut(int idMembre, Statut statut) {
 		return Membre.changerStatut(club, idMembre, statut);
 	}
@@ -206,6 +218,7 @@ public class ControlerClub {
 	/**
 	 * réinitialise la liste des membres
 	 */
+	@Override
 	public void initMembres() {
 		Membre.initMembres(club);
 	}
@@ -216,6 +229,7 @@ public class ControlerClub {
 	 * @param dateEven date et heure de l'événement
 	 * @return booléen indiquant s'il existe un événement à cette date
 	 */
+	@Override
 	public boolean existeEvenement(LocalDateTime dateEven) {
 		if (Evenement.rechercherEvenement(club, dateEven) == null) {
 			return false;
@@ -230,6 +244,7 @@ public class ControlerClub {
 	 * @param id identifiant
 	 * @return libellé
 	 */
+	@Override
 	public String suppressionMembrePossible(int id) {
 		Membre membre = Membre.trouverMembre(club, id);
 		return membre.suppressionMembrePossible();

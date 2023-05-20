@@ -5,6 +5,7 @@ import boundary.club.BoundaryClub;
 import boundary.club.Registre;
 import boundary.menu.Menu;
 import controler.ControlerClub;
+import controler.IControlerClub;
 
 /**
  * @title 3eme mi-temps
@@ -16,7 +17,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		// Pour l'instant, j'instantie le club avec les informations du constructeur - la persistance de ces informations sera faite ultérieurement
-		final ControlerClub club = new ControlerClub();
+		final IControlerClub club = new ControlerClub();
 		String saisie;
 		do {
 			saisie = Menu.choisirAction();
@@ -35,7 +36,7 @@ public class Main {
 	 * @param club
 	 * @param saisie
 	 */
-	private static void testerAction(final ControlerClub club, String saisie) {
+	private static void testerAction(final IControlerClub club, String saisie) {
 		switch (saisie.toUpperCase().charAt(0)) {
 		case 'T':
 			// appel de toutes les méthodes en test sans persistance
@@ -90,7 +91,7 @@ public class Main {
 	 * @param club
 	 * @param saisie
 	 */
-	private static void testerListe(final ControlerClub club, String saisie) {
+	private static void testerListe(final IControlerClub club, String saisie) {
 		switch (saisie.toUpperCase().charAt(1)) {
 		case '1':
 			BoundaryClub.afficherMembres(club);

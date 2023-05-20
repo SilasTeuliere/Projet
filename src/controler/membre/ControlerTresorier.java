@@ -7,7 +7,7 @@ import java.util.List;
 
 import commun.Statut;
 import controler.AchatAffichage;
-import controler.ControlerClub;
+import controler.IControlerClub;
 import entity.evenement.Evenement;
 import entity.evenement.FournitureEven;
 import entity.evenement.FournitureInscrit;
@@ -24,7 +24,7 @@ public class ControlerTresorier{
 	 * @param controlerClub
 	 * @return
 	 */
-	public static boolean estTresorier(ControlerClub controlerClub,int iD) {
+	public static boolean estTresorier(IControlerClub controlerClub,int iD) {
 		Membre membre = Membre.trouverMembre(controlerClub.getClub(), iD);
 		if (membre != null && Statut.TRESORIER.equals(membre.getStatut())) {
 		   return true;
@@ -41,7 +41,7 @@ public class ControlerTresorier{
 	 * @param montantPrevu montant que prévoit de verser le membre pour son inscription
 	 * @param iD
 	 */
-	public static AchatAffichage listerAchatRestantLocation(ControlerClub controlerClub, LocalDateTime dateEvenement, int iD) {
+	public static AchatAffichage listerAchatRestantLocation(IControlerClub controlerClub, LocalDateTime dateEvenement, int iD) {
 		if (!estTresorier(controlerClub, iD)) {
 			return null;
 		}

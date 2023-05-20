@@ -4,7 +4,7 @@ package controler.membre;
 import java.time.LocalDateTime;
 
 import commun.Statut;
-import controler.ControlerClub;
+import controler.IControlerClub;
 import entity.evenement.Evenement;
 import entity.membre.Membre;
 
@@ -21,7 +21,7 @@ public class ControlerPresident  {
 	 * @param controlerClub
 	 * @return
 	 */
-	public static boolean estPresident(ControlerClub controlerClub,int iD) {
+	public static boolean estPresident(IControlerClub controlerClub,int iD) {
 		Membre membre = Membre.trouverMembre(controlerClub.getClub(), iD);
 		if (membre != null && Statut.PRESIDENT.equals(membre.getStatut())) {
 		   return true;
@@ -38,7 +38,7 @@ public class ControlerPresident  {
 	 * @param detail information sur l'événement
 	 * @param iD identifiant du président
 	 */
-	public static void creerEvenement(ControlerClub controlerClub, LocalDateTime dateEven, String detail, int iD) {
+	public static void creerEvenement(IControlerClub controlerClub, LocalDateTime dateEven, String detail, int iD) {
 		if (estPresident(controlerClub, iD)) {
 		   Evenement.ajouterEvenement(controlerClub.getClub(), dateEven, detail);
 		}
@@ -50,7 +50,7 @@ public class ControlerPresident  {
 	 * @param dateEven date et heure de l'événement
 	 * @param iD identifiant du président
 	 */
-	public static void supprimerEvenement(ControlerClub controlerClub, LocalDateTime dateEven, int iD) {
+	public static void supprimerEvenement(IControlerClub controlerClub, LocalDateTime dateEven, int iD) {
 		if (estPresident(controlerClub, iD)) {
 			Evenement.supprimerEvenement(controlerClub.getClub(), dateEven);
 		}
