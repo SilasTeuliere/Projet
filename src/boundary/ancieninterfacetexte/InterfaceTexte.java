@@ -1,5 +1,5 @@
 
-package boundary.main;
+package boundary.ancieninterfacetexte;
 
 import boundary.club.BoundaryClub;
 import boundary.club.Registre;
@@ -12,9 +12,11 @@ import controler.IControlerClub;
  * @author TEULIERE Silas 22003086
  * @version 1.0.0 30 Decemebre 2022
  */
-public class Main {
+public class InterfaceTexte {
 
-	public static void main(String[] args) {
+/*
+ * ancien interface de saisie en mode texte - gardé pour test 
+ 	public static void main(String[] args) {
 		
 		// Pour l'instant, j'instantie le club avec les informations du constructeur - la persistance de ces informations sera faite ultérieurement
 		final IControlerClub club = new ControlerClub();
@@ -30,7 +32,7 @@ public class Main {
 		
 		Menu.fermeScanner();
 	}
-
+*/
 	/**
 	 * Teste et exécute les différentes action possible - ajouter des actions au besoin comme ajouter membre, changer bureau, supprimer membre, évenement ou inscrit
 	 * @param club
